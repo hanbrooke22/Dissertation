@@ -27,21 +27,25 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(normal_out_path, "w
 
         model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
 
+        input_len = model_inputs.input_ids.shape[1]
+
         generated_ids = model.generate(
             **model_inputs,
-            max_new_tokens=512
+            max_new_tokens=512,
+            do_sample=True, 
+            num_return_sequences=10,
+            temperature=0.8, 
+            top_p=0.95
         )
 
-        generated_ids = [
-            output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
-        ]
+        generated_ids = generated_ids[:, input_len:]
 
-        response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+        responses = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 
-        out_record = {
+        out_item = {
             "category": item.get("category"), 
             "prompt": item.get("prompt"), 
-            "response": response
+            "responses": responses
         }
 
-        f_out.write(json.dumps(out_record, ensure_ascii=False) + "\n")
+        f_out.write(json.dumps(out_item) + "\n")
