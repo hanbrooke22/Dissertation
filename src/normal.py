@@ -30,7 +30,7 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(normal_out_path, "w
         with torch.inference_mode():
             generated_ids = model.generate(
                 **model_inputs,
-                max_new_tokens=512,
+                max_new_tokens=256,
                 do_sample=True, 
                 num_return_sequences=10,
                 temperature=0.8, 
