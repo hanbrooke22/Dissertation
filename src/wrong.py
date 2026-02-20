@@ -36,7 +36,7 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(wrong_out_path, "w"
         prompt = item["prompt"]
 
         messages = [
-            {"role": "system", "content": "You are a helpful assistant. Always answer in full sentences."},
+            {"role": "system", "content": "You are a helpful assistant. Always give a direct, confident answer."},
             {"role": "user", "content": prompt}
         ]
 

@@ -1,5 +1,4 @@
-import json
-import torch
+import json, csv, torch
 import numpy as np
 from collections import defaultdict
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
@@ -96,7 +95,6 @@ normal_results = process_file("results/normal.jsonl")
 print("Processing misrouted routing...")
 misrouted_results = process_file("results/misrouted.jsonl")
 
-# --- File 1: Per-prompt comparison ---
 prompt_rows = []
 for n, m in zip(normal_results, misrouted_results):
     prompt_rows.append({
@@ -114,7 +112,6 @@ with open("results/per_prompt_comparison.json", "w") as f:
 
 print("\nPer-prompt comparison saved to results/per_prompt_comparison.json")
 
-# --- File 2: Per-category comparison ---
 category_stats = defaultdict(lambda: {
     "normal_entropies": [],
     "misrouted_entropies": []
@@ -144,10 +141,21 @@ with open("results/per_category_comparison.json", "w") as f:
 
 print("Per-category comparison saved to results/per_category_comparison.json")
 
-# Print category summary to terminal
+
 print("\n=== CATEGORY SUMMARY ===")
 for row in category_rows:
     print(f"\n{row['category']} ({row['num_prompts']} prompts)")
     print(f"  Normal    - mean entropy: {row['normal_mean_entropy']:.4f} (std: {row['normal_std_entropy']:.4f})")
     print(f"  Misrouted - mean entropy: {row['misrouted_mean_entropy']:.4f} (std: {row['misrouted_std_entropy']:.4f})")
     print(f"  Difference: {row['mean_entropy_diff']:+.4f}")
+
+
+with open("results/per_prompt_comparison.csv", "w", newline="") as f:
+    writer = csv.DictWriter(f, fieldnames=prompt_rows[0].keys())
+    writer.writeheader()
+    writer.writerows(prompt_rows)
+
+with open("results/per_category_comparison.csv", "w", newline="") as f:
+    writer = csv.DictWriter(f, fieldnames=category_rows[0].keys())
+    writer.writeheader()
+    writer.writerows(category_rows)
