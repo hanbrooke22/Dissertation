@@ -1,73 +1,115 @@
-import json, torch
+import json
+import torch
 from model import model, tokenizer
 
-prompts_path = "data/prompts.jsonl"
-wrong_out_path = "results/misrouted.jsonl"
+# ── Config ────────────────────────────────────────────────────────────────────
+PROMPTS_PATH      = "data/prompts.jsonl"
+OUTPUT_PATH       = "results/misrouted.jsonl"
+MISROUTE_STRENGTH = 0.3   # 0.0 = no misrouting, 1.0 = fully random
+                           # Start at 0.3 — increase if entropy diff too small,
+                           # decrease if responses are still garbage
+MAX_RETRIES       = 3     # Retries per prompt if too many empty responses
+MIN_VALID         = 5     # Minimum non-empty responses required to accept a batch
 
-original_routes = {}
+torch.manual_seed(42)
 
-#Source: github
+# ── Register forward hooks on gate Linear layers ──────────────────────────────
+# Qwen2MoeSparseMoeBlock uses self.gate = nn.Linear(hidden_size, num_experts)
+# We blend real logits with noise: (1 - strength) * real + strength * noise
+# Noise is scaled to the same mean/std as the real logits so magnitude doesn't
+# dominate — only direction (i.e. expert selection) is disrupted.
+
+hooks      = []
+gate_count = 0
+
 for name, module in model.named_modules():
-    if hasattr(module, 'route_tokens_to_experts'):
-        original_routes[name] = module.route_tokens_to_experts
+    if "mlp.gate" in name and isinstance(module, torch.nn.Linear):
+        if module.out_features > 1:   # skip shared_expert_gate (out_features=1)
+            def make_hook(strength):
+                def hook_fn(module, input, output):
+                    noise = torch.rand_like(output)
+                    noise = noise * output.std() + output.mean()
+                    return (1.0 - strength) * output + strength * noise
+                return hook_fn
 
-        def make_misrouted(original_fn):
-            def misrouted_routing(hidden_states, router_logits):
-                selected_experts, routing_weights = original_fn(hidden_states, router_logits)
-                #source:hugging face
-                random_experts = torch.randint(
-                    0, 
-                    model.config.num_experts,
-                    selected_experts.shape,
-                    device=selected_experts.device
-                )
-                return random_experts, routing_weights
-            return misrouted_routing
-        
-        module.route_tokens_to_experts = make_misrouted(original_routes[name])
+            h = module.register_forward_hook(make_hook(MISROUTE_STRENGTH))
+            hooks.append(h)
+            gate_count += 1
 
-with open(prompts_path, "r", encoding="utf-8") as f_in, open(wrong_out_path, "w", encoding="utf-8") as f_out:
-    for line in f_in: 
-        line = line.strip()
-        if not line: 
-            continue
+print(f"Registered hooks on {gate_count} gate modules (strength={MISROUTE_STRENGTH})")
 
-        item = json.loads(line)
-        prompt = item["prompt"]
+if gate_count == 0:
+    print("WARNING: No gate modules found. Printing all Linear layers to diagnose:")
+    for name, module in model.named_modules():
+        if isinstance(module, torch.nn.Linear):
+            print(f"  {name}  (out_features={module.out_features})")
+    raise RuntimeError("Fix the gate filter above and rerun.")
 
-        messages = [
-            {"role": "system", "content": "You are a helpful assistant. Always give a direct, confident answer."},
-            {"role": "user", "content": prompt}
-        ]
+# ── Generation helper ─────────────────────────────────────────────────────────
+def generate_responses(prompt, n=10):
+    messages = [
+        {"role": "system", "content": "You are a helpful assistant. Always give a direct, confident answer in a full sentence."},
+        {"role": "user",   "content": prompt}
+    ]
+    text = tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True
+    )
+    model_inputs = tokenizer([text], return_tensors="pt").to(
+        next(model.parameters()).device
+    )
+    input_len = model_inputs.input_ids.shape[1]
 
-        text = tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True
+    with torch.inference_mode():
+        generated_ids = model.generate(
+            **model_inputs,
+            max_new_tokens=256,
+            do_sample=True,
+            num_return_sequences=n,
+            temperature=0.8,
+            top_p=0.95
         )
 
-        model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
+    generated_ids = generated_ids[:, input_len:]
+    return tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 
-        input_len = model_inputs.input_ids.shape[1]
+# ── Main generation loop ──────────────────────────────────────────────────────
+with open(PROMPTS_PATH, "r", encoding="utf-8") as f_in, \
+     open(OUTPUT_PATH,  "w", encoding="utf-8") as f_out:
 
-        with torch.inference_mode():
-            generated_ids = model.generate(
-                **model_inputs,
-                max_new_tokens=256,
-                do_sample=True, 
-                num_return_sequences=10,
-                temperature=0.8, 
-                top_p=0.95
-            )
+    for line in f_in:
+        line = line.strip()
+        if not line:
+            continue
 
-        generated_ids = generated_ids[:, input_len:]
+        item   = json.loads(line)
+        prompt = item["prompt"]
 
-        responses = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
+        responses = []
+        for attempt in range(1, MAX_RETRIES + 1):
+            candidates = generate_responses(prompt)
+            valid      = [r for r in candidates if len(r.strip()) > 5]
+            if len(valid) >= MIN_VALID:
+                responses = candidates
+                break
+            print(f"  Attempt {attempt}/{MAX_RETRIES}: "
+                  f"only {len(valid)} valid — retrying...")
+
+        if len([r for r in responses if len(r.strip()) > 5]) < MIN_VALID:
+            print(f"  WARN: gave up on '{prompt[:50]}...' — "
+                  f"lower MISROUTE_STRENGTH if this keeps happening")
 
         out_item = {
-            "category": item.get("category"), 
-            "prompt": item.get("prompt"), 
+            "category":  item.get("category"),
+            "prompt":    prompt,
             "responses": responses
         }
-
         f_out.write(json.dumps(out_item) + "\n")
+
+        n_valid = len([r for r in responses if len(r.strip()) > 5])
+        print(f"[{n_valid}/10 valid] {prompt[:70]}")
+
+# ── Clean up ──────────────────────────────────────────────────────────────────
+for h in hooks:
+    h.remove()
+
+print("\nDone. Hooks removed.")

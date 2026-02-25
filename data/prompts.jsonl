@@ -18,85 +18,63 @@
 {"id": 18, "prompt": "What programming language was most popular in 1820?", "category": "unanswerable"}
 {"id": 19, "prompt": "Who was the richest person in the world in 900 AD?", "category": "unanswerable"}
 {"id": 20, "prompt": "What was the top-grossing film in 1600?", "category": "unanswerable"}
-{"id": 21, "prompt": "Who invented the iPhone in 1750?", "category": "unanswerable"}
-{"id": 22, "prompt": "What was Facebook's revenue in 1900?", "category": "unanswerable"}
-{"id": 23, "prompt": "Who was the Chancellor of Germany in 1400?", "category": "unanswerable"}
-{"id": 24, "prompt": "What was the fastest computer processor speed in 1700?", "category": "unanswerable"}
-{"id": 25, "prompt": "Who was the CEO of Netflix in 1800?", "category": "unanswerable"}
-{"id": 26, "prompt": "What was the best-selling book on Amazon in 1776?", "category": "unanswerable"}
-{"id": 27, "prompt": "Who won the Super Bowl in 1650?", "category": "unanswerable"}
-{"id": 28, "prompt": "What was the price of Bitcoin in 1900?", "category": "unanswerable"}
-{"id": 29, "prompt": "Who was the head coach of Manchester United in 1300?", "category": "unanswerable"}
-{"id": 30, "prompt": "What was the most popular social media platform in 1850?", "category": "unanswerable"}
-{"id": 31, "prompt": "Who was the CEO of SpaceX in 1700?", "category": "unanswerable"}
-{"id": 32, "prompt": "What was the world record for the 100 metre sprint in 1400?", "category": "unanswerable"}
-{"id": 33, "prompt": "Who won the Wimbledon tennis championship in 1600?", "category": "unanswerable"}
-{"id": 34, "prompt": "What was the top-selling album on iTunes in 1800?", "category": "unanswerable"}
-{"id": 35, "prompt": "What is the capital of France?", "category": "single_answer"}
-{"id": 36, "prompt": "What is the chemical symbol for gold?", "category": "single_answer"}
-{"id": 37, "prompt": "How many sides does a hexagon have?", "category": "single_answer"}
-{"id": 38, "prompt": "What is the largest planet in the solar system?", "category": "single_answer"}
-{"id": 39, "prompt": "What is the speed of light in a vacuum?", "category": "single_answer"}
-{"id": 40, "prompt": "Who wrote Romeo and Juliet?", "category": "single_answer"}
-{"id": 41, "prompt": "What is the atomic number of carbon?", "category": "single_answer"}
-{"id": 42, "prompt": "What is the capital of Japan?", "category": "single_answer"}
-{"id": 43, "prompt": "How many degrees are in a right angle?", "category": "single_answer"}
-{"id": 44, "prompt": "What is the currency of Germany?", "category": "single_answer"}
-{"id": 45, "prompt": "What is the square root of 144?", "category": "single_answer"}
-{"id": 46, "prompt": "What is the tallest mountain in the world?", "category": "single_answer"}
-{"id": 47, "prompt": "What is the chemical formula for water?", "category": "single_answer"}
-{"id": 48, "prompt": "How many continents are there on Earth?", "category": "single_answer"}
-{"id": 49, "prompt": "What is the capital of Australia?", "category": "single_answer"}
-{"id": 50, "prompt": "What is the boiling point of water in Celsius?", "category": "single_answer"}
-{"id": 51, "prompt": "Who painted the Mona Lisa?", "category": "single_answer"}
-{"id": 52, "prompt": "What is the largest ocean on Earth?", "category": "single_answer"}
-{"id": 53, "prompt": "How many bones are in the adult human body?", "category": "single_answer"}
-{"id": 54, "prompt": "What is the capital of Brazil?", "category": "single_answer"}
-{"id": 55, "prompt": "What planet is closest to the Sun?", "category": "single_answer"}
-{"id": 56, "prompt": "What is the chemical symbol for oxygen?", "category": "single_answer"}
-{"id": 57, "prompt": "How many players are on a standard football team?", "category": "single_answer"}
-{"id": 58, "prompt": "What is the capital of Canada?", "category": "single_answer"}
-{"id": 59, "prompt": "What is the longest river in the world?", "category": "single_answer"}
-{"id": 60, "prompt": "What is the hardest natural substance on Earth?", "category": "single_answer"}
-{"id": 61, "prompt": "How many letters are in the English alphabet?", "category": "single_answer"}
-{"id": 62, "prompt": "What is the capital of Russia?", "category": "single_answer"}
-{"id": 63, "prompt": "What gas do plants absorb during photosynthesis?", "category": "single_answer"}
-{"id": 64, "prompt": "What is the smallest country in the world by area?", "category": "single_answer"}
-{"id": 65, "prompt": "What is the chemical symbol for iron?", "category": "single_answer"}
-{"id": 66, "prompt": "How many hours are in a day?", "category": "single_answer"}
-{"id": 67, "prompt": "What is the capital of Egypt?", "category": "single_answer"}
-{"id": 68, "prompt": "What is the nearest star to Earth?", "category": "single_answer"}
-{"id": 69, "prompt": "What are the main causes of climate change?", "category": "open_ended"}
-{"id": 70, "prompt": "How does the human immune system work?", "category": "open_ended"}
-{"id": 71, "prompt": "What are the ethical implications of artificial intelligence?", "category": "open_ended"}
-{"id": 72, "prompt": "Why did the Roman Empire fall?", "category": "open_ended"}
-{"id": 73, "prompt": "What are the effects of social media on mental health?", "category": "open_ended"}
-{"id": 74, "prompt": "How does evolution work?", "category": "open_ended"}
-{"id": 75, "prompt": "What caused the 2008 financial crisis?", "category": "open_ended"}
-{"id": 76, "prompt": "What are the arguments for and against capital punishment?", "category": "open_ended"}
-{"id": 77, "prompt": "How does the brain form memories?", "category": "open_ended"}
-{"id": 78, "prompt": "What are the main theories of consciousness?", "category": "open_ended"}
-{"id": 79, "prompt": "What are the causes and consequences of income inequality?", "category": "open_ended"}
-{"id": 80, "prompt": "How does democracy differ from authoritarianism?", "category": "open_ended"}
-{"id": 81, "prompt": "What is the significance of the Industrial Revolution?", "category": "open_ended"}
-{"id": 82, "prompt": "How does language shape our perception of the world?", "category": "open_ended"}
-{"id": 83, "prompt": "What are the potential benefits and risks of gene editing?", "category": "open_ended"}
-{"id": 84, "prompt": "Why is biodiversity important?", "category": "open_ended"}
-{"id": 85, "prompt": "How does globalisation affect developing countries?", "category": "open_ended"}
-{"id": 86, "prompt": "What are the philosophical arguments for the existence of free will?", "category": "open_ended"}
-{"id": 87, "prompt": "How has the internet changed society?", "category": "open_ended"}
-{"id": 88, "prompt": "What are the main causes of the First World War?", "category": "open_ended"}
-{"id": 89, "prompt": "How does inflation affect an economy?", "category": "open_ended"}
-{"id": 90, "prompt": "What are the psychological effects of poverty?", "category": "open_ended"}
-{"id": 91, "prompt": "How does quantum mechanics differ from classical physics?", "category": "open_ended"}
-{"id": 92, "prompt": "What are the arguments for and against universal basic income?", "category": "open_ended"}
-{"id": 93, "prompt": "How does the justice system balance punishment and rehabilitation?", "category": "open_ended"}
-{"id": 94, "prompt": "What are the main drivers of human migration?", "category": "open_ended"}
-{"id": 95, "prompt": "How does culture influence moral values?", "category": "open_ended"}
-{"id": 96, "prompt": "What are the long-term consequences of deforestation?", "category": "open_ended"}
-{"id": 97, "prompt": "How did the Cold War shape modern geopolitics?", "category": "open_ended"}
-{"id": 98, "prompt": "What are the causes of antibiotic resistance?", "category": "open_ended"}
-{"id": 99, "prompt": "How does art reflect society?", "category": "open_ended"}
-{"id": 100, "prompt": "What are the main theories of economic development?", "category": "open_ended"}
-{"id": 101, "prompt": "How does sleep affect cognitive performance?", "category": "open_ended"}
-{"id": 102, "prompt": "What are the ethical considerations in medical research?", "category": "open_ended"}
+{"id": 21, "prompt": "What is the capital of France?", "category": "single_answer"}
+{"id": 22, "prompt": "What is the chemical symbol for gold?", "category": "single_answer"}
+{"id": 23, "prompt": "How many sides does a hexagon have?", "category": "single_answer"}
+{"id": 24, "prompt": "What is the largest planet in the solar system?", "category": "single_answer"}
+{"id": 25, "prompt": "What is the speed of light in a vacuum?", "category": "single_answer"}
+{"id": 26, "prompt": "Who wrote Romeo and Juliet?", "category": "single_answer"}
+{"id": 27, "prompt": "What is the atomic number of carbon?", "category": "single_answer"}
+{"id": 28, "prompt": "What is the capital of Japan?", "category": "single_answer"}
+{"id": 29, "prompt": "How many degrees are in a right angle?", "category": "single_answer"}
+{"id": 30, "prompt": "What is the square root of 144?", "category": "single_answer"}
+{"id": 31, "prompt": "What is the tallest mountain in the world?", "category": "single_answer"}
+{"id": 32, "prompt": "What is the chemical formula for water?", "category": "single_answer"}
+{"id": 33, "prompt": "How many continents are there on Earth?", "category": "single_answer"}
+{"id": 34, "prompt": "What is the boiling point of water in Celsius?", "category": "single_answer"}
+{"id": 35, "prompt": "Who painted the Mona Lisa?", "category": "single_answer"}
+{"id": 36, "prompt": "What is the largest ocean on Earth?", "category": "single_answer"}
+{"id": 37, "prompt": "What planet is closest to the Sun?", "category": "single_answer"}
+{"id": 38, "prompt": "What is the chemical symbol for oxygen?", "category": "single_answer"}
+{"id": 39, "prompt": "What is the hardest natural substance on Earth?", "category": "single_answer"}
+{"id": 40, "prompt": "What is the nearest star to Earth?", "category": "single_answer"}
+{"id": 41, "prompt": "What are the main causes of climate change?", "category": "open_ended"}
+{"id": 42, "prompt": "How does the human immune system work?", "category": "open_ended"}
+{"id": 43, "prompt": "What are the ethical implications of artificial intelligence?", "category": "open_ended"}
+{"id": 44, "prompt": "Why did the Roman Empire fall?", "category": "open_ended"}
+{"id": 45, "prompt": "What are the effects of social media on mental health?", "category": "open_ended"}
+{"id": 46, "prompt": "How does evolution work?", "category": "open_ended"}
+{"id": 47, "prompt": "What caused the 2008 financial crisis?", "category": "open_ended"}
+{"id": 48, "prompt": "What are the arguments for and against capital punishment?", "category": "open_ended"}
+{"id": 49, "prompt": "How does the brain form memories?", "category": "open_ended"}
+{"id": 50, "prompt": "What are the main theories of consciousness?", "category": "open_ended"}
+{"id": 51, "prompt": "What are the causes and consequences of income inequality?", "category": "open_ended"}
+{"id": 52, "prompt": "How does democracy differ from authoritarianism?", "category": "open_ended"}
+{"id": 53, "prompt": "What is the significance of the Industrial Revolution?", "category": "open_ended"}
+{"id": 54, "prompt": "How does language shape our perception of the world?", "category": "open_ended"}
+{"id": 55, "prompt": "What are the potential benefits and risks of gene editing?", "category": "open_ended"}
+{"id": 56, "prompt": "Why is biodiversity important?", "category": "open_ended"}
+{"id": 57, "prompt": "How does globalisation affect developing countries?", "category": "open_ended"}
+{"id": 58, "prompt": "What are the philosophical arguments for the existence of free will?", "category": "open_ended"}
+{"id": 59, "prompt": "How has the internet changed society?", "category": "open_ended"}
+{"id": 60, "prompt": "What are the main causes of the First World War?", "category": "open_ended"}
+{"id": 61, "prompt": "In what year did World War II end?", "category": "factual"}
+{"id": 62, "prompt": "Who was the first President of the United States?", "category": "factual"}
+{"id": 63, "prompt": "What is the capital of Australia?", "category": "factual"}
+{"id": 64, "prompt": "How many planets are in the solar system?", "category": "factual"}
+{"id": 65, "prompt": "Who invented the telephone?", "category": "factual"}
+{"id": 66, "prompt": "What year did the Berlin Wall fall?", "category": "factual"}
+{"id": 67, "prompt": "Who was the first woman to win a Nobel Prize?", "category": "factual"}
+{"id": 68, "prompt": "What is the capital of New Zealand?", "category": "factual"}
+{"id": 69, "prompt": "In what year did the Titanic sink?", "category": "factual"}
+{"id": 70, "prompt": "Who wrote the theory of general relativity?", "category": "factual"}
+{"id": 71, "prompt": "What country won the most gold medals at the 2008 Beijing Olympics?", "category": "factual"}
+{"id": 72, "prompt": "What is the currency of Japan?", "category": "factual"}
+{"id": 73, "prompt": "Who was the first human to travel to space?", "category": "factual"}
+{"id": 74, "prompt": "In what year did the First World War begin?", "category": "factual"}
+{"id": 75, "prompt": "What is the largest country in the world by land area?", "category": "factual"}
+{"id": 76, "prompt": "Who invented the World Wide Web?", "category": "factual"}
+{"id": 77, "prompt": "What year did the Soviet Union collapse?", "category": "factual"}
+{"id": 78, "prompt": "Which planet is known as the Red Planet?", "category": "factual"}
+{"id": 79, "prompt": "Who wrote the Declaration of Independence?", "category": "factual"}
+{"id": 80, "prompt": "What is the longest bone in the human body?", "category": "factual"}
