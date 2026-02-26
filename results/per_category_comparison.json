@@ -1,0 +1,38 @@
+[
+  {
+    "category": "unanswerable",
+    "num_prompts": 20,
+    "normal_mean_entropy": 0.28905845549152553,
+    "normal_std_entropy": 0.30149273261441517,
+    "misrouted_mean_entropy": 1.4724059868259274,
+    "misrouted_std_entropy": 0.3853844954638305,
+    "mean_entropy_diff": 1.1833475313344017
+  },
+  {
+    "category": "single_answer",
+    "num_prompts": 20,
+    "normal_mean_entropy": 0.01625414866957241,
+    "normal_std_entropy": 0.07085019146395223,
+    "misrouted_mean_entropy": 1.1885402857541854,
+    "misrouted_std_entropy": 0.42687718473976055,
+    "mean_entropy_diff": 1.172286137084613
+  },
+  {
+    "category": "open_ended",
+    "num_prompts": 20,
+    "normal_mean_entropy": 0.1033674757295056,
+    "normal_std_entropy": 0.26639610070192166,
+    "misrouted_mean_entropy": 1.2410297121349483,
+    "misrouted_std_entropy": 0.31612743544879524,
+    "mean_entropy_diff": 1.1376622364054427
+  },
+  {
+    "category": "factual",
+    "num_prompts": 20,
+    "normal_mean_entropy": 0.0,
+    "normal_std_entropy": 0.0,
+    "misrouted_mean_entropy": 1.2038026695160648,
+    "misrouted_std_entropy": 0.3626892608623984,
+    "mean_entropy_diff": 1.2038026695160648
+  }
+]

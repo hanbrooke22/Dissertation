@@ -1,0 +1,81 @@
+prompt,category,normal_clusters,normal_entropy,misrouted_clusters,misrouted_entropy,entropy_diff
+Who was the CEO of Google in 1895?,unanswerable,1,0.0,6,1.6094,1.6094
+What was Apple's stock price in 1823?,unanswerable,1,0.0,5,1.3592,1.3592
+Who won the FIFA World Cup in 1823?,unanswerable,1,0.0,4,1.1683,1.1683
+What was the most popular smartphone app in 1776?,unanswerable,2,0.5004,6,1.6957,1.1953
+Who was the Prime Minister of the UK in 1200?,unanswerable,2,0.3251,8,2.0253,1.7002
+What was Tesla's market capitalisation in 1650?,unanswerable,2,0.3251,5,1.2275,0.9024
+Who was the first person to send an email in 1066?,unanswerable,3,0.639,4,1.2799,0.6408
+What was the GDP of the United States in 1300?,unanswerable,3,0.8018,4,1.1935,0.3917
+Who founded Amazon in 1492?,unanswerable,2,0.3251,3,0.639,0.3139
+What was the most watched YouTube video in 1800?,unanswerable,1,0.0,6,1.4979,1.4979
+Who was the President of the United States in 1200?,unanswerable,1,0.0,7,1.8867,1.8867
+What was the top-selling video game in 1750?,unanswerable,2,0.3251,8,1.973,1.6479
+Who was the CEO of Microsoft in 1776?,unanswerable,1,0.0,4,0.9404,0.9404
+What was the internet download speed record in 1850?,unanswerable,1,0.0,7,1.7481,1.7481
+Who won the Nobel Prize in Physics in 1650?,unanswerable,2,0.3251,4,1.1935,0.8685
+What was the population of New York City in 800 AD?,unanswerable,2,0.6109,6,1.6434,1.0326
+Who was the first person to walk on the moon in 1700?,unanswerable,3,0.8018,8,1.973,1.1712
+What programming language was most popular in 1820?,unanswerable,1,0.0,7,1.7481,1.7481
+Who was the richest person in the world in 900 AD?,unanswerable,1,0.0,3,0.8979,0.8979
+What was the top-grossing film in 1600?,unanswerable,3,0.8018,7,1.7481,0.9462
+What is the capital of France?,single_answer,2,0.3251,3,0.8979,0.5729
+What is the chemical symbol for gold?,single_answer,1,0.0,3,0.639,0.639
+How many sides does a hexagon have?,single_answer,1,0.0,6,1.6094,1.6094
+What is the largest planet in the solar system?,single_answer,1,0.0,5,1.4708,1.4708
+What is the speed of light in a vacuum?,single_answer,1,0.0,4,1.0889,1.0889
+Who wrote Romeo and Juliet?,single_answer,1,0.0,3,0.8018,0.8018
+What is the atomic number of carbon?,single_answer,1,0.0,5,1.2275,1.2275
+What is the capital of Japan?,single_answer,1,0.0,7,1.8344,1.8344
+How many degrees are in a right angle?,single_answer,1,0.0,4,0.9404,0.9404
+What is the square root of 144?,single_answer,1,0.0,6,1.6094,1.6094
+What is the tallest mountain in the world?,single_answer,1,0.0,4,1.0889,1.0889
+What is the chemical formula for water?,single_answer,1,0.0,1,0.0,0.0
+How many continents are there on Earth?,single_answer,1,0.0,7,1.8344,1.8344
+What is the boiling point of water in Celsius?,single_answer,1,0.0,4,0.9404,0.9404
+Who painted the Mona Lisa?,single_answer,1,0.0,5,1.3592,1.3592
+What is the largest ocean on Earth?,single_answer,1,0.0,5,1.3592,1.3592
+What planet is closest to the Sun?,single_answer,1,0.0,4,1.3138,1.3138
+What is the chemical symbol for oxygen?,single_answer,1,0.0,3,0.8979,0.8979
+What is the hardest natural substance on Earth?,single_answer,1,0.0,6,1.4979,1.4979
+What is the nearest star to Earth?,single_answer,1,0.0,5,1.3592,1.3592
+What are the main causes of climate change?,open_ended,1,0.0,5,1.2275,1.2275
+How does the human immune system work?,open_ended,1,0.0,3,0.8018,0.8018
+What are the ethical implications of artificial intelligence?,open_ended,1,0.0,7,1.7481,1.7481
+Why did the Roman Empire fall?,open_ended,1,0.0,5,1.4185,1.4185
+What are the effects of social media on mental health?,open_ended,1,0.0,6,1.4979,1.4979
+How does evolution work?,open_ended,1,0.0,4,0.9404,0.9404
+What caused the 2008 financial crisis?,open_ended,1,0.0,5,1.3592,1.3592
+What are the arguments for and against capital punishment?,open_ended,2,0.3251,4,1.1683,0.8432
+How does the brain form memories?,open_ended,1,0.0,4,0.9404,0.9404
+What are the main theories of consciousness?,open_ended,4,0.9404,3,0.639,-0.3014
+What are the causes and consequences of income inequality?,open_ended,1,0.0,6,1.4979,1.4979
+How does democracy differ from authoritarianism?,open_ended,1,0.0,8,1.973,1.973
+What is the significance of the Industrial Revolution?,open_ended,1,0.0,3,0.8979,0.8979
+How does language shape our perception of the world?,open_ended,1,0.0,5,1.2275,1.2275
+What are the potential benefits and risks of gene editing?,open_ended,1,0.0,5,1.3592,1.3592
+Why is biodiversity important?,open_ended,1,0.0,5,1.2275,1.2275
+How does globalisation affect developing countries?,open_ended,1,0.0,5,1.2275,1.2275
+What are the philosophical arguments for the existence of free will?,open_ended,3,0.8018,5,1.2275,0.4257
+How has the internet changed society?,open_ended,1,0.0,6,1.4979,1.4979
+What are the main causes of the First World War?,open_ended,1,0.0,3,0.9433,0.9433
+In what year did World War II end?,factual,1,0.0,4,0.9404,0.9404
+Who was the first President of the United States?,factual,1,0.0,4,1.0889,1.0889
+What is the capital of Australia?,factual,1,0.0,4,0.9404,0.9404
+How many planets are in the solar system?,factual,1,0.0,6,1.6094,1.6094
+Who invented the telephone?,factual,1,0.0,5,1.2275,1.2275
+What year did the Berlin Wall fall?,factual,1,0.0,5,1.4185,1.4185
+Who was the first woman to win a Nobel Prize?,factual,1,0.0,7,1.7481,1.7481
+What is the capital of New Zealand?,factual,1,0.0,5,1.5048,1.5048
+In what year did the Titanic sink?,factual,1,0.0,4,0.9404,0.9404
+Who wrote the theory of general relativity?,factual,1,0.0,3,0.8018,0.8018
+What country won the most gold medals at the 2008 Beijing Olympics?,factual,1,0.0,3,0.8018,0.8018
+What is the currency of Japan?,factual,1,0.0,6,1.6434,1.6434
+Who was the first human to travel to space?,factual,1,0.0,4,1.1683,1.1683
+In what year did the First World War begin?,factual,1,0.0,3,0.639,0.639
+What is the largest country in the world by land area?,factual,1,0.0,4,0.9404,0.9404
+Who invented the World Wide Web?,factual,1,0.0,3,0.639,0.639
+What year did the Soviet Union collapse?,factual,1,0.0,7,1.8344,1.8344
+Which planet is known as the Red Planet?,factual,1,0.0,5,1.3592,1.3592
+Who wrote the Declaration of Independence?,factual,1,0.0,4,1.2206,1.2206
+What is the longest bone in the human body?,factual,1,0.0,6,1.6094,1.6094

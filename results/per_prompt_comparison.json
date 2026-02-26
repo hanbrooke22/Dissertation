@@ -1,0 +1,722 @@
+[
+  {
+    "prompt": "Who was the CEO of Google in 1895?",
+    "category": "unanswerable",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.6094,
+    "entropy_diff": 1.6094
+  },
+  {
+    "prompt": "What was Apple's stock price in 1823?",
+    "category": "unanswerable",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.3592,
+    "entropy_diff": 1.3592
+  },
+  {
+    "prompt": "Who won the FIFA World Cup in 1823?",
+    "category": "unanswerable",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.1683,
+    "entropy_diff": 1.1683
+  },
+  {
+    "prompt": "What was the most popular smartphone app in 1776?",
+    "category": "unanswerable",
+    "normal_clusters": 2,
+    "normal_entropy": 0.5004,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.6957,
+    "entropy_diff": 1.1953
+  },
+  {
+    "prompt": "Who was the Prime Minister of the UK in 1200?",
+    "category": "unanswerable",
+    "normal_clusters": 2,
+    "normal_entropy": 0.3251,
+    "misrouted_clusters": 8,
+    "misrouted_entropy": 2.0253,
+    "entropy_diff": 1.7002
+  },
+  {
+    "prompt": "What was Tesla's market capitalisation in 1650?",
+    "category": "unanswerable",
+    "normal_clusters": 2,
+    "normal_entropy": 0.3251,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.2275,
+    "entropy_diff": 0.9024
+  },
+  {
+    "prompt": "Who was the first person to send an email in 1066?",
+    "category": "unanswerable",
+    "normal_clusters": 3,
+    "normal_entropy": 0.639,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.2799,
+    "entropy_diff": 0.6408
+  },
+  {
+    "prompt": "What was the GDP of the United States in 1300?",
+    "category": "unanswerable",
+    "normal_clusters": 3,
+    "normal_entropy": 0.8018,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.1935,
+    "entropy_diff": 0.3917
+  },
+  {
+    "prompt": "Who founded Amazon in 1492?",
+    "category": "unanswerable",
+    "normal_clusters": 2,
+    "normal_entropy": 0.3251,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.639,
+    "entropy_diff": 0.3139
+  },
+  {
+    "prompt": "What was the most watched YouTube video in 1800?",
+    "category": "unanswerable",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.4979,
+    "entropy_diff": 1.4979
+  },
+  {
+    "prompt": "Who was the President of the United States in 1200?",
+    "category": "unanswerable",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 7,
+    "misrouted_entropy": 1.8867,
+    "entropy_diff": 1.8867
+  },
+  {
+    "prompt": "What was the top-selling video game in 1750?",
+    "category": "unanswerable",
+    "normal_clusters": 2,
+    "normal_entropy": 0.3251,
+    "misrouted_clusters": 8,
+    "misrouted_entropy": 1.973,
+    "entropy_diff": 1.6479
+  },
+  {
+    "prompt": "Who was the CEO of Microsoft in 1776?",
+    "category": "unanswerable",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 0.9404,
+    "entropy_diff": 0.9404
+  },
+  {
+    "prompt": "What was the internet download speed record in 1850?",
+    "category": "unanswerable",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 7,
+    "misrouted_entropy": 1.7481,
+    "entropy_diff": 1.7481
+  },
+  {
+    "prompt": "Who won the Nobel Prize in Physics in 1650?",
+    "category": "unanswerable",
+    "normal_clusters": 2,
+    "normal_entropy": 0.3251,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.1935,
+    "entropy_diff": 0.8685
+  },
+  {
+    "prompt": "What was the population of New York City in 800 AD?",
+    "category": "unanswerable",
+    "normal_clusters": 2,
+    "normal_entropy": 0.6109,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.6434,
+    "entropy_diff": 1.0326
+  },
+  {
+    "prompt": "Who was the first person to walk on the moon in 1700?",
+    "category": "unanswerable",
+    "normal_clusters": 3,
+    "normal_entropy": 0.8018,
+    "misrouted_clusters": 8,
+    "misrouted_entropy": 1.973,
+    "entropy_diff": 1.1712
+  },
+  {
+    "prompt": "What programming language was most popular in 1820?",
+    "category": "unanswerable",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 7,
+    "misrouted_entropy": 1.7481,
+    "entropy_diff": 1.7481
+  },
+  {
+    "prompt": "Who was the richest person in the world in 900 AD?",
+    "category": "unanswerable",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.8979,
+    "entropy_diff": 0.8979
+  },
+  {
+    "prompt": "What was the top-grossing film in 1600?",
+    "category": "unanswerable",
+    "normal_clusters": 3,
+    "normal_entropy": 0.8018,
+    "misrouted_clusters": 7,
+    "misrouted_entropy": 1.7481,
+    "entropy_diff": 0.9462
+  },
+  {
+    "prompt": "What is the capital of France?",
+    "category": "single_answer",
+    "normal_clusters": 2,
+    "normal_entropy": 0.3251,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.8979,
+    "entropy_diff": 0.5729
+  },
+  {
+    "prompt": "What is the chemical symbol for gold?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.639,
+    "entropy_diff": 0.639
+  },
+  {
+    "prompt": "How many sides does a hexagon have?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.6094,
+    "entropy_diff": 1.6094
+  },
+  {
+    "prompt": "What is the largest planet in the solar system?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.4708,
+    "entropy_diff": 1.4708
+  },
+  {
+    "prompt": "What is the speed of light in a vacuum?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.0889,
+    "entropy_diff": 1.0889
+  },
+  {
+    "prompt": "Who wrote Romeo and Juliet?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.8018,
+    "entropy_diff": 0.8018
+  },
+  {
+    "prompt": "What is the atomic number of carbon?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.2275,
+    "entropy_diff": 1.2275
+  },
+  {
+    "prompt": "What is the capital of Japan?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 7,
+    "misrouted_entropy": 1.8344,
+    "entropy_diff": 1.8344
+  },
+  {
+    "prompt": "How many degrees are in a right angle?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 0.9404,
+    "entropy_diff": 0.9404
+  },
+  {
+    "prompt": "What is the square root of 144?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.6094,
+    "entropy_diff": 1.6094
+  },
+  {
+    "prompt": "What is the tallest mountain in the world?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.0889,
+    "entropy_diff": 1.0889
+  },
+  {
+    "prompt": "What is the chemical formula for water?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 1,
+    "misrouted_entropy": 0.0,
+    "entropy_diff": 0.0
+  },
+  {
+    "prompt": "How many continents are there on Earth?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 7,
+    "misrouted_entropy": 1.8344,
+    "entropy_diff": 1.8344
+  },
+  {
+    "prompt": "What is the boiling point of water in Celsius?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 0.9404,
+    "entropy_diff": 0.9404
+  },
+  {
+    "prompt": "Who painted the Mona Lisa?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.3592,
+    "entropy_diff": 1.3592
+  },
+  {
+    "prompt": "What is the largest ocean on Earth?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.3592,
+    "entropy_diff": 1.3592
+  },
+  {
+    "prompt": "What planet is closest to the Sun?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.3138,
+    "entropy_diff": 1.3138
+  },
+  {
+    "prompt": "What is the chemical symbol for oxygen?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.8979,
+    "entropy_diff": 0.8979
+  },
+  {
+    "prompt": "What is the hardest natural substance on Earth?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.4979,
+    "entropy_diff": 1.4979
+  },
+  {
+    "prompt": "What is the nearest star to Earth?",
+    "category": "single_answer",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.3592,
+    "entropy_diff": 1.3592
+  },
+  {
+    "prompt": "What are the main causes of climate change?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.2275,
+    "entropy_diff": 1.2275
+  },
+  {
+    "prompt": "How does the human immune system work?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.8018,
+    "entropy_diff": 0.8018
+  },
+  {
+    "prompt": "What are the ethical implications of artificial intelligence?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 7,
+    "misrouted_entropy": 1.7481,
+    "entropy_diff": 1.7481
+  },
+  {
+    "prompt": "Why did the Roman Empire fall?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.4185,
+    "entropy_diff": 1.4185
+  },
+  {
+    "prompt": "What are the effects of social media on mental health?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.4979,
+    "entropy_diff": 1.4979
+  },
+  {
+    "prompt": "How does evolution work?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 0.9404,
+    "entropy_diff": 0.9404
+  },
+  {
+    "prompt": "What caused the 2008 financial crisis?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.3592,
+    "entropy_diff": 1.3592
+  },
+  {
+    "prompt": "What are the arguments for and against capital punishment?",
+    "category": "open_ended",
+    "normal_clusters": 2,
+    "normal_entropy": 0.3251,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.1683,
+    "entropy_diff": 0.8432
+  },
+  {
+    "prompt": "How does the brain form memories?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 0.9404,
+    "entropy_diff": 0.9404
+  },
+  {
+    "prompt": "What are the main theories of consciousness?",
+    "category": "open_ended",
+    "normal_clusters": 4,
+    "normal_entropy": 0.9404,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.639,
+    "entropy_diff": -0.3014
+  },
+  {
+    "prompt": "What are the causes and consequences of income inequality?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.4979,
+    "entropy_diff": 1.4979
+  },
+  {
+    "prompt": "How does democracy differ from authoritarianism?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 8,
+    "misrouted_entropy": 1.973,
+    "entropy_diff": 1.973
+  },
+  {
+    "prompt": "What is the significance of the Industrial Revolution?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.8979,
+    "entropy_diff": 0.8979
+  },
+  {
+    "prompt": "How does language shape our perception of the world?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.2275,
+    "entropy_diff": 1.2275
+  },
+  {
+    "prompt": "What are the potential benefits and risks of gene editing?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.3592,
+    "entropy_diff": 1.3592
+  },
+  {
+    "prompt": "Why is biodiversity important?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.2275,
+    "entropy_diff": 1.2275
+  },
+  {
+    "prompt": "How does globalisation affect developing countries?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.2275,
+    "entropy_diff": 1.2275
+  },
+  {
+    "prompt": "What are the philosophical arguments for the existence of free will?",
+    "category": "open_ended",
+    "normal_clusters": 3,
+    "normal_entropy": 0.8018,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.2275,
+    "entropy_diff": 0.4257
+  },
+  {
+    "prompt": "How has the internet changed society?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.4979,
+    "entropy_diff": 1.4979
+  },
+  {
+    "prompt": "What are the main causes of the First World War?",
+    "category": "open_ended",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.9433,
+    "entropy_diff": 0.9433
+  },
+  {
+    "prompt": "In what year did World War II end?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 0.9404,
+    "entropy_diff": 0.9404
+  },
+  {
+    "prompt": "Who was the first President of the United States?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.0889,
+    "entropy_diff": 1.0889
+  },
+  {
+    "prompt": "What is the capital of Australia?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 0.9404,
+    "entropy_diff": 0.9404
+  },
+  {
+    "prompt": "How many planets are in the solar system?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.6094,
+    "entropy_diff": 1.6094
+  },
+  {
+    "prompt": "Who invented the telephone?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.2275,
+    "entropy_diff": 1.2275
+  },
+  {
+    "prompt": "What year did the Berlin Wall fall?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.4185,
+    "entropy_diff": 1.4185
+  },
+  {
+    "prompt": "Who was the first woman to win a Nobel Prize?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 7,
+    "misrouted_entropy": 1.7481,
+    "entropy_diff": 1.7481
+  },
+  {
+    "prompt": "What is the capital of New Zealand?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.5048,
+    "entropy_diff": 1.5048
+  },
+  {
+    "prompt": "In what year did the Titanic sink?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 0.9404,
+    "entropy_diff": 0.9404
+  },
+  {
+    "prompt": "Who wrote the theory of general relativity?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.8018,
+    "entropy_diff": 0.8018
+  },
+  {
+    "prompt": "What country won the most gold medals at the 2008 Beijing Olympics?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.8018,
+    "entropy_diff": 0.8018
+  },
+  {
+    "prompt": "What is the currency of Japan?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.6434,
+    "entropy_diff": 1.6434
+  },
+  {
+    "prompt": "Who was the first human to travel to space?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.1683,
+    "entropy_diff": 1.1683
+  },
+  {
+    "prompt": "In what year did the First World War begin?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.639,
+    "entropy_diff": 0.639
+  },
+  {
+    "prompt": "What is the largest country in the world by land area?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 0.9404,
+    "entropy_diff": 0.9404
+  },
+  {
+    "prompt": "Who invented the World Wide Web?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 3,
+    "misrouted_entropy": 0.639,
+    "entropy_diff": 0.639
+  },
+  {
+    "prompt": "What year did the Soviet Union collapse?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 7,
+    "misrouted_entropy": 1.8344,
+    "entropy_diff": 1.8344
+  },
+  {
+    "prompt": "Which planet is known as the Red Planet?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 5,
+    "misrouted_entropy": 1.3592,
+    "entropy_diff": 1.3592
+  },
+  {
+    "prompt": "Who wrote the Declaration of Independence?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 4,
+    "misrouted_entropy": 1.2206,
+    "entropy_diff": 1.2206
+  },
+  {
+    "prompt": "What is the longest bone in the human body?",
+    "category": "factual",
+    "normal_clusters": 1,
+    "normal_entropy": 0.0,
+    "misrouted_clusters": 6,
+    "misrouted_entropy": 1.6094,
+    "entropy_diff": 1.6094
+  }
+]
