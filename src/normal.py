@@ -2,9 +2,9 @@ import json, torch
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
-normal_out_path = "results/normal.jsonl"
+output_path = "results/normal.jsonl"
 
-with open(prompts_path, "r", encoding="utf-8") as f_in, open(normal_out_path, "w", encoding="utf-8") as f_out:
+with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", encoding="utf-8") as f_out:
     for line in f_in:
         line = line.strip()
         if not line:
