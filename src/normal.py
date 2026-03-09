@@ -1,4 +1,11 @@
-import json, torch
+import json, torch, random
+import numpy as np
+
+random.seed(42)
+np.random.seed(42)
+torch.manual_seed(42)
+torch.cuda.manual_seed_all(42)
+
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
@@ -14,7 +21,7 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", e
         prompt = item["prompt"]
 
         messages = [
-            {"role": "system", "content": "You are a helpful assistant. Always give a direct, confident answer in a full sentence."},
+            {"role": "system", "content": "You are a helpful assistant. Always give a direct, confident answer in a full sentence"},
             {"role": "user", "content": prompt}
         ]
 

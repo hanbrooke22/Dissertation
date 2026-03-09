@@ -4,15 +4,16 @@ import numpy as np
 from collections import defaultdict
 from sentence_transformers import SentenceTransformer
 
-normal_path    = "results/normal.jsonl"
-misrouted_path = "results/misrouted.jsonl"
+normal_path  = "results/normal.jsonl"
+random_path  = "results/misrouted.jsonl"
+bottom_path  = "results/misrouted_bottom.jsonl"
 
 embed_model_name = "all-mpnet-base-v2"
 
 short_threshold  = 0.60
 medium_threshold = 0.72
 long_threshold   = 0.82
- 
+
 # Load the embedding model - converts sentences into lists of numbers
 device = "cuda" if torch.cuda.is_available() else "cpu"
 embed_model = SentenceTransformer(embed_model_name, device=device)
@@ -64,7 +65,7 @@ def semantic_entropy(clusters: list[list[int]]) -> float:
     return float(-(p * np.log(p)).sum())
 
 
-# Reads jsonl file containing the responses and returns it at as a list
+# Reads jsonl file containing the responses and returns it as a list
 def load_jsonl(path: str) -> list[dict]:
     items = []
     with open(path, "r", encoding="utf-8") as f:
@@ -75,27 +76,10 @@ def load_jsonl(path: str) -> list[dict]:
             items.append(json.loads(line))
     return items
 
-#Loads both the files
-normal_items = load_jsonl(normal_path)
-mis_items    = load_jsonl(misrouted_path)
 
-# Check both files match up before processing
-if len(normal_items) != len(mis_items):
-    raise ValueError(f"Line count mismatch: normal={len(normal_items)} misrouted={len(mis_items)}")
-
-for i, (n, m) in enumerate(zip(normal_items, mis_items)):
-    if n.get("prompt") != m.get("prompt"):
-        raise ValueError(f"Prompt mismatch at line {i}")
-
-normal_res = []
-mis_res    = []
-
-
-# Runs once for each file
-for items, label, results in [
-    (normal_items, "normal", normal_res),
-    (mis_items, "misrouted", mis_res)
-]:
+def compute_entropy_for_items(items: list[dict], label: str) -> list[dict]:
+    """Compute semantic entropy for every prompt in a condition."""
+    results = []
     for i, item in enumerate(items):
         responses  = item["responses"]
         mean_words = np.mean([len(r.split()) for r in responses])
@@ -121,19 +105,48 @@ for items, label, results in [
             "num_clusters":  len(clusters),
             "entropy":       entropy,
         })
+    return results
 
+
+# Load all 3 conditions
+normal_items = load_jsonl(normal_path)
+random_items = load_jsonl(random_path)
+bottom_items = load_jsonl(bottom_path)
+
+# Verify all 3 files match up
+if not (len(normal_items) == len(random_items) == len(bottom_items)):
+    raise ValueError(f"Line count mismatch: normal={len(normal_items)} "
+                     f"random={len(random_items)} bottom={len(bottom_items)}")
+
+for i, (n, r, b) in enumerate(zip(normal_items, random_items, bottom_items)):
+    if not (n.get("prompt") == r.get("prompt") == b.get("prompt")):
+        raise ValueError(f"Prompt mismatch at line {i}")
+
+# Compute entropy for each condition
+print("Computing entropy for normal routing...")
+normal_res = compute_entropy_for_items(normal_items, "normal")
+
+print("Computing entropy for random routing...")
+random_res = compute_entropy_for_items(random_items, "random")
+
+print("Computing entropy for bottom-4 routing...")
+bottom_res = compute_entropy_for_items(bottom_items, "bottom4")
+
+# ── Per-prompt comparison ──────────────────────────────────────────────────────
 prompt_rows = []
-
-# Pairs each normal result with misrouted equivalent
-for n, m in zip(normal_res, mis_res):
+for n, r, b in zip(normal_res, random_res, bottom_res):
     prompt_rows.append({
-        "prompt":             n["prompt"],
-        "category":           n["category"],
-        "normal_clusters":    n["num_clusters"],
-        "normal_entropy":     round(n["entropy"], 4),
-        "misrouted_clusters": m["num_clusters"],
-        "misrouted_entropy":  round(m["entropy"], 4),
-        "entropy_diff":       round(m["entropy"] - n["entropy"], 4),
+        "prompt":                n["prompt"],
+        "category":              n["category"],
+        "normal_clusters":       n["num_clusters"],
+        "normal_entropy":        round(n["entropy"], 4),
+        "random_clusters":       r["num_clusters"],
+        "random_entropy":        round(r["entropy"], 4),
+        "bottom_clusters":       b["num_clusters"],
+        "bottom_entropy":        round(b["entropy"], 4),
+        "diff_normal_random":    round(r["entropy"] - n["entropy"], 4),
+        "diff_normal_bottom":    round(b["entropy"] - n["entropy"], 4),
+        "diff_random_bottom":    round(b["entropy"] - r["entropy"], 4),
     })
 
 with open("results/per_prompt_comparison.json", "w", encoding="utf-8") as f:
@@ -144,24 +157,30 @@ with open("results/per_prompt_comparison.csv", "w", newline="", encoding="utf-8"
     writer.writeheader()
     writer.writerows(prompt_rows)
 
-# Groups entropy scores by category
-cat = defaultdict(lambda: {"normal": [], "misrouted": []})
-for n, m in zip(normal_res, mis_res):
+# ── Per-category summary ───────────────────────────────────────────────────────
+cat = defaultdict(lambda: {"normal": [], "random": [], "bottom": []})
+for n, r, b in zip(normal_res, random_res, bottom_res):
     cat[n["category"]]["normal"].append(n["entropy"])
-    cat[n["category"]]["misrouted"].append(m["entropy"])
+    cat[n["category"]]["random"].append(r["entropy"])
+    cat[n["category"]]["bottom"].append(b["entropy"])
 
 category_rows = []
 for category, vals in cat.items():
-    n_vals = np.array(vals["normal"],    dtype=float)
-    m_vals = np.array(vals["misrouted"], dtype=float)
+    n_vals = np.array(vals["normal"], dtype=float)
+    r_vals = np.array(vals["random"], dtype=float)
+    b_vals = np.array(vals["bottom"], dtype=float)
     category_rows.append({
-        "category":               category,
-        "num_prompts":            int(len(n_vals)),
-        "normal_mean_entropy":    float(n_vals.mean()),
-        "normal_std_entropy":     float(n_vals.std()),
-        "misrouted_mean_entropy": float(m_vals.mean()),
-        "misrouted_std_entropy":  float(m_vals.std()),
-        "mean_entropy_diff":      float(m_vals.mean() - n_vals.mean()),
+        "category":              category,
+        "num_prompts":           int(len(n_vals)),
+        "normal_mean_entropy":   float(n_vals.mean()),
+        "normal_std_entropy":    float(n_vals.std()),
+        "random_mean_entropy":   float(r_vals.mean()),
+        "random_std_entropy":    float(r_vals.std()),
+        "bottom_mean_entropy":   float(b_vals.mean()),
+        "bottom_std_entropy":    float(b_vals.std()),
+        "diff_normal_random":    float(r_vals.mean() - n_vals.mean()),
+        "diff_normal_bottom":    float(b_vals.mean() - n_vals.mean()),
+        "diff_random_bottom":    float(b_vals.mean() - r_vals.mean()),
     })
 
 with open("results/per_category_comparison.json", "w", encoding="utf-8") as f:
@@ -171,3 +190,6 @@ with open("results/per_category_comparison.csv", "w", newline="", encoding="utf-
     writer = csv.DictWriter(f, fieldnames=list(category_rows[0].keys()))
     writer.writeheader()
     writer.writerows(category_rows)
+
+print("\nDone. Results saved to results/per_prompt_comparison.{json,csv} "
+      "and results/per_category_comparison.{json,csv}")

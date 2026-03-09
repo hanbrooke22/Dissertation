@@ -9,8 +9,7 @@ torch.cuda.manual_seed_all(42)
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
-output_path = "results/misrouted.jsonl"
-misroute_strength = 0.4  # Change the routing - 40% noise
+output_path = "results/misrouted_bottom.jsonl"
 
 hooks = []
 
@@ -19,17 +18,16 @@ for name, module in model.named_modules():
     if "mlp.gate" in name and isinstance(module, torch.nn.Linear):
         if module.out_features > 1:
 
-            # Intercept the gate layer's output and corrupt it
-            def make_hook(strength):
+            # Negate the gate logits so the bottom 4 experts become the top 4
+            def make_hook():
                 def hook_fn(module, input, output):
-                    noise = torch.rand_like(output)
-                    noise = noise * output.std() + output.mean()
-                    return (1.0 - strength) * output + strength * noise
+                    return -output
                 return hook_fn
 
             # Attach hook to each gate layer, save so it can be removed later
-            h = module.register_forward_hook(make_hook(misroute_strength))
+            h = module.register_forward_hook(make_hook())
             hooks.append(h)
+
 
 def generate_responses(prompt):
     messages = [
@@ -59,6 +57,7 @@ def generate_responses(prompt):
     # Strip the input tokens and decode back to text
     generated_ids = generated_ids[:, input_len:]
     return tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
+
 
 # Output to the file
 with open(prompts_path, "r", encoding="utf-8") as f_in, \
