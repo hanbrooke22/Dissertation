@@ -1,38 +1,41 @@
 [
   {
     "category": "unanswerable",
-    "num_prompts": 20,
-    "normal_mean_entropy": 0.28905845549152553,
-    "normal_std_entropy": 0.30149273261441517,
-    "misrouted_mean_entropy": 1.4724059868259274,
-    "misrouted_std_entropy": 0.3853844954638305,
-    "mean_entropy_diff": 1.1833475313344017
-  },
-  {
-    "category": "single_answer",
-    "num_prompts": 20,
-    "normal_mean_entropy": 0.01625414866957241,
-    "normal_std_entropy": 0.07085019146395223,
-    "misrouted_mean_entropy": 1.1885402857541854,
-    "misrouted_std_entropy": 0.42687718473976055,
-    "mean_entropy_diff": 1.172286137084613
-  },
-  {
-    "category": "open_ended",
-    "num_prompts": 20,
-    "normal_mean_entropy": 0.1033674757295056,
-    "normal_std_entropy": 0.26639610070192166,
-    "misrouted_mean_entropy": 1.2410297121349483,
-    "misrouted_std_entropy": 0.31612743544879524,
-    "mean_entropy_diff": 1.1376622364054427
+    "num_prompts": 27,
+    "normal_mean_entropy": 0.14917661042589364,
+    "normal_std_entropy": 0.24656326995529132,
+    "misrouted_mean_entropy": 1.4645626839520374,
+    "misrouted_std_entropy": 0.3638203742862886,
+    "top1_mean_entropy": 0.20248921411686713,
+    "top1_std_entropy": 0.32876333884947834,
+    "diff_normal_misrouted": 1.3153860735261438,
+    "diff_normal_top1": 0.05331260369097349,
+    "diff_misrouted_top1": -1.2620734698351703
   },
   {
     "category": "factual",
-    "num_prompts": 20,
+    "num_prompts": 27,
     "normal_mean_entropy": 0.0,
     "normal_std_entropy": 0.0,
-    "misrouted_mean_entropy": 1.2038026695160648,
-    "misrouted_std_entropy": 0.3626892608623984,
-    "mean_entropy_diff": 1.2038026695160648
+    "misrouted_mean_entropy": 1.1992794468795096,
+    "misrouted_std_entropy": 0.5691370878354369,
+    "top1_mean_entropy": 0.0,
+    "top1_std_entropy": 0.0,
+    "diff_normal_misrouted": 1.1992794468795096,
+    "diff_normal_top1": 0.0,
+    "diff_misrouted_top1": -1.1992794468795096
+  },
+  {
+    "category": "open_ended",
+    "num_prompts": 27,
+    "normal_mean_entropy": 0.04733569330742052,
+    "normal_std_entropy": 0.1673569486492186,
+    "misrouted_mean_entropy": 1.2060366037856336,
+    "misrouted_std_entropy": 0.42626728448886825,
+    "top1_mean_entropy": 0.05760454042682711,
+    "top1_std_entropy": 0.2171929934759838,
+    "diff_normal_misrouted": 1.158700910478213,
+    "diff_normal_top1": 0.010268847119406593,
+    "diff_misrouted_top1": -1.1484320633588065
   }
 ]
