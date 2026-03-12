@@ -10,17 +10,9 @@ torch.cuda.manual_seed_all(42)
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
-output_path = "results/biased.jsonl"
+output_path = "results/top1.jsonl"
 
-# Qwen1.5-MoE uses Qwen2MoeTopKRouter which runs:
-#   1. softmax on gate logits
-#   2. topk(router_logits, self.top_k)  <- top_k=4 normally
-#
-# We monkey-patch the forward method of each router to force top_k=2,
-# keeping everything else identical to the original forward pass.
-# This is the only clean way to change k without corrupting activations.
-
-def make_top2_forward(original_forward, module):
+def make_top1_forward(original_forward, module):
     def patched_forward(hidden_states):
         hidden_states_flat = hidden_states.reshape(-1, module.hidden_dim)
         router_logits = F.linear(hidden_states_flat, module.weight)
@@ -28,9 +20,9 @@ def make_top2_forward(original_forward, module):
             router_logits, dtype=torch.float, dim=-1
         )
 
-        # Force top-2 instead of the default top-4
+        # Force top-1 instead of the default top-4
         router_top_value, router_indices = torch.topk(
-            router_logits_softmax, k=2, dim=-1
+            router_logits_softmax, k=1, dim=-1
         )
 
         if module.norm_topk_prob:
@@ -45,12 +37,11 @@ def make_top2_forward(original_forward, module):
     return patched_forward
 
 
-# Find and patch every router in the model
 patched_modules = []
 for name, module in model.named_modules():
     if hasattr(module, 'top_k') and hasattr(module, 'norm_topk_prob') and hasattr(module, 'hidden_dim'):
         original_forward = module.forward
-        module.forward = make_top2_forward(original_forward, module)
+        module.forward = make_top1_forward(original_forward, module)
         patched_modules.append((name, module, original_forward))
 
 print(f"Patched {len(patched_modules)} router modules")
@@ -94,7 +85,6 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, \
 
         item = json.loads(line)
         prompt = item["prompt"]
-
         responses = generate_responses(prompt)
 
         out_item = {
@@ -104,7 +94,6 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, \
         }
         f_out.write(json.dumps(out_item) + "\n")
 
-# Restore original forward methods
 for name, module, original_forward in patched_modules:
     module.forward = original_forward
 
