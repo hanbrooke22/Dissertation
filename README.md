@@ -65,7 +65,7 @@ python src/visualisations.py
 `data/prompts.jsonl` contains one prompt per line in the following format:
 
 ```json
-{"category": "factual", "prompt": "Your prompt here"}
+{"id": id number, "category": "factual", "prompt": "Your prompt here"}
 ```
 
 Three prompt categories are used: `factual`, `open_ended`, and `unanswerable`.
