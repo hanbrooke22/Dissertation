@@ -1,7 +1,9 @@
-MoE Routing and Model Uncertainty
+MoE Routing and Model Uncertainty:
+
 An empirical investigation into how expert routing strategies in Mixture-of-Experts (MoE) language models affect output uncertainty, measured via semantic entropy.
 
-Overview
+Overview:
+
 This project examines whether manipulating the expert routing mechanism of a MoE language model (Qwen1.5-MoE-A2.7B-Chat) causes measurable changes in response consistency. Three routing conditions are compared:
 
 Normal — default routing behaviour (baseline)
