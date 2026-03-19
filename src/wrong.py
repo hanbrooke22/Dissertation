@@ -1,6 +1,7 @@
 import json, torch, random
 import numpy as np
 
+# Seed all random number generators for reproducibility across ruins
 random.seed(42)
 np.random.seed(42)
 torch.manual_seed(42)
@@ -9,35 +10,36 @@ torch.cuda.manual_seed_all(42)
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
-output_path = "results/misrouted.jsonl"
+output_path = "results/misrouted.jsonl" # Misrouted condition output
+
 misroute_strength = 0.4  # Change the routing - 40% noise
 
+# Register forward hooks on all MoE gate layers to corrupt their routing logits
 hooks = []
 
-# Loop through every layer of the model, look for layers that decide which expert to activate
 for name, module in model.named_modules():
     if "mlp.gate" in name and isinstance(module, torch.nn.Linear):
         if module.out_features > 1:
 
-            # Intercept the gate layer's output and corrupt it
             def make_hook(strength):
+                # Hook intercepts the gate output and injects noise proportional to misroute_strength
                 def hook_fn(module, input, output):
                     noise = torch.rand_like(output)
                     noise = noise * output.std() + output.mean()
                     return (1.0 - strength) * output + strength * noise
                 return hook_fn
 
-            # Attach hook to each gate layer, save so it can be removed later
+            # Attach hook to each gate layer and storereference for later removal
             h = module.register_forward_hook(make_hook(misroute_strength))
             hooks.append(h)
 
 def generate_responses(prompt):
+    # Generate 10 responses per prompt under the misrouted condition
     messages = [
         {"role": "system", "content": "You are a helpful assistant. Always give a direct, confident answer in a full sentence."},
         {"role": "user",   "content": prompt}
     ]
 
-    # Format the prompt into the chat format and tokenize
     text = tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=True
     )
@@ -56,7 +58,7 @@ def generate_responses(prompt):
             top_p=0.95
         )
 
-    # Strip the input tokens and decode back to text
+    # Strip the input tokens from each generated sequence before decoding
     generated_ids = generated_ids[:, input_len:]
     return tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 

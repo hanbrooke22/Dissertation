@@ -1,0 +1,224 @@
+{
+  "overall": {
+    "n": 81,
+    "means": {
+      "normal": 0.0655037037037037,
+      "misrouted": 1.2899469135802468,
+      "top1": 0.08669876543209876
+    },
+    "stds": {
+      "normal": 0.18295806201263276,
+      "misrouted": 0.47740624574687784,
+      "top1": 0.2429196048961884
+    },
+    "shapiro_wilk_differences": {
+      "normal_vs_misrouted": {
+        "W": 0.9563115313481837,
+        "p": 0.007542995118809885,
+        "sig": "**",
+        "normal": "no"
+      },
+      "normal_vs_top1": {
+        "W": 0.48366537061154946,
+        "p": 2.158457473816733e-15,
+        "sig": "***",
+        "normal": "no"
+      },
+      "misrouted_vs_top1": {
+        "W": 0.9543010040368778,
+        "p": 0.005720070088706163,
+        "sig": "**",
+        "normal": "no"
+      }
+    },
+    "test_used": {
+      "normal_vs_misrouted": "wilcoxon",
+      "normal_vs_top1": "wilcoxon",
+      "misrouted_vs_top1": "wilcoxon"
+    },
+    "test_results": {
+      "normal_vs_misrouted": {
+        "W": 0.0,
+        "p": 1.6406757785630908e-14,
+        "sig": "***"
+      },
+      "normal_vs_top1": {
+        "W": 17.5,
+        "p": 0.30743416592739536,
+        "sig": "ns"
+      },
+      "misrouted_vs_top1": {
+        "W": 0.0,
+        "p": 1.638999301427136e-14,
+        "sig": "***"
+      }
+    }
+  },
+  "by_category": {
+    "unanswerable": {
+      "n": 27,
+      "means": {
+        "normal": 0.14917777777777777,
+        "misrouted": 1.4645518518518523,
+        "top1": 0.20249259259259259
+      },
+      "stds": {
+        "normal": 0.2465626767786376,
+        "misrouted": 0.36382866070229064,
+        "top1": 0.32876612865764887
+      },
+      "shapiro_wilk_differences": {
+        "normal_vs_misrouted": {
+          "W": 0.9687080899434085,
+          "p": 0.5680575986131777,
+          "sig": "ns",
+          "normal": "yes"
+        },
+        "normal_vs_top1": {
+          "W": 0.708901697670349,
+          "p": 5.168939545364016e-06,
+          "sig": "***",
+          "normal": "no"
+        },
+        "misrouted_vs_top1": {
+          "W": 0.9676512297656652,
+          "p": 0.5410974903720263,
+          "sig": "ns",
+          "normal": "yes"
+        }
+      },
+      "test_used": {
+        "normal_vs_misrouted": "paired t-test",
+        "normal_vs_top1": "wilcoxon",
+        "misrouted_vs_top1": "paired t-test"
+      },
+      "test_results": {
+        "normal_vs_misrouted": {
+          "t": -18.315761031392363,
+          "p": 2.2133637014050917e-16,
+          "sig": "***"
+        },
+        "normal_vs_top1": {
+          "W": 6.0,
+          "p": 0.17552335081205495,
+          "sig": "ns"
+        },
+        "misrouted_vs_top1": {
+          "t": 15.615712032057061,
+          "p": 1.0015926762340851e-14,
+          "sig": "***"
+        }
+      }
+    },
+    "factual": {
+      "n": 27,
+      "means": {
+        "normal": 0.0,
+        "misrouted": 1.1992666666666667,
+        "top1": 0.0
+      },
+      "stds": {
+        "normal": 0.0,
+        "misrouted": 0.5691387059993958,
+        "top1": 0.0
+      },
+      "shapiro_wilk_differences": {
+        "normal_vs_misrouted": {
+          "W": 0.8801788730195447,
+          "p": 0.004846711441288566,
+          "sig": "**",
+          "normal": "no"
+        },
+        "normal_vs_top1": {
+          "W": NaN,
+          "p": NaN,
+          "sig": "n/a",
+          "normal": "n/a"
+        },
+        "misrouted_vs_top1": {
+          "W": 0.8801788730195447,
+          "p": 0.004846711441288566,
+          "sig": "**",
+          "normal": "no"
+        }
+      },
+      "test_used": {
+        "normal_vs_misrouted": "wilcoxon",
+        "normal_vs_top1": "wilcoxon",
+        "misrouted_vs_top1": "wilcoxon"
+      },
+      "test_results": {
+        "normal_vs_misrouted": {
+          "W": 0.0,
+          "p": 1.7824487898461016e-05,
+          "sig": "***"
+        },
+        "normal_vs_top1": {
+          "W": NaN,
+          "p": NaN,
+          "sig": "n/a"
+        },
+        "misrouted_vs_top1": {
+          "W": 0.0,
+          "p": 1.7824487898461016e-05,
+          "sig": "***"
+        }
+      }
+    },
+    "open_ended": {
+      "n": 27,
+      "means": {
+        "normal": 0.04733333333333333,
+        "misrouted": 1.206022222222222,
+        "top1": 0.0576037037037037
+      },
+      "stds": {
+        "normal": 0.16734860488081627,
+        "misrouted": 0.42627088095554605,
+        "top1": 0.21718938054914108
+      },
+      "shapiro_wilk_differences": {
+        "normal_vs_misrouted": {
+          "W": 0.9680252429902965,
+          "p": 0.5505644149906217,
+          "sig": "ns",
+          "normal": "yes"
+        },
+        "normal_vs_top1": {
+          "W": 0.4618334088074616,
+          "p": 7.04531300201529e-09,
+          "sig": "***",
+          "normal": "no"
+        },
+        "misrouted_vs_top1": {
+          "W": 0.973485157812035,
+          "p": 0.6955744735600327,
+          "sig": "ns",
+          "normal": "yes"
+        }
+      },
+      "test_used": {
+        "normal_vs_misrouted": "paired t-test",
+        "normal_vs_top1": "wilcoxon",
+        "misrouted_vs_top1": "paired t-test"
+      },
+      "test_results": {
+        "normal_vs_misrouted": {
+          "t": -13.568485776058912,
+          "p": 2.629123927319769e-13,
+          "sig": "***"
+        },
+        "normal_vs_top1": {
+          "W": 3.0,
+          "p": 1.0,
+          "sig": "ns"
+        },
+        "misrouted_vs_top1": {
+          "t": 12.027378383125004,
+          "p": 3.985066688618831e-12,
+          "sig": "***"
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import json, torch, random
 import numpy as np
 
+# Seed all random number generators for reproducibility across runs
 random.seed(42)
 np.random.seed(42)
 torch.manual_seed(42)
@@ -9,7 +10,7 @@ torch.cuda.manual_seed_all(42)
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
-output_path = "results/normal.jsonl"
+output_path = "results/normal.jsonl" # Output for the baseline generation
 
 with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", encoding="utf-8") as f_out:
     for line in f_in:
@@ -25,6 +26,7 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", e
             {"role": "user", "content": prompt}
         ]
 
+        # Apply the model's chat
         text = tokenizer.apply_chat_template(
             messages,
             tokenize=False,
@@ -34,7 +36,8 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", e
         model_inputs = tokenizer([text], return_tensors="pt").to(next(model.parameters()).device)
         input_len = model_inputs.input_ids.shape[1]
 
-        with torch.inference_mode():
+        # Generate 10 responses per prompt to measure output variation under the baseline condition
+        with torch.inference_mode(): # inference_mode disables gradient tracking for efficiency 
             generated_ids = model.generate(
                 **model_inputs,
                 max_new_tokens=256,
@@ -44,6 +47,7 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", e
                 top_p=0.95
             )
 
+        # Strip input tokens from each generated sequence before decoding
         generated_ids = generated_ids[:, input_len:]
         responses = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 

@@ -10,17 +10,16 @@ top1_path    = "results/top1.jsonl"
 
 embed_model_name = "all-mpnet-base-v2"
 
+# Length adaptive thresholds for semantic similarity clustering, shorter responses require a lower threshold to avoid over-splitting
 short_threshold  = 0.60
 medium_threshold = 0.72
 long_threshold   = 0.82
 
-# Load the embedding model - converts sentences into lists of numbers
 device = "cuda" if torch.cuda.is_available() else "cpu"
 embed_model = SentenceTransformer(embed_model_name, device=device)
 
-
-# Short responses need a lower threshold
 def get_threshold(responses: list[str]) -> float:
+    # Select similarity threshold based on mean response length
     mean_words = np.mean([len(r.split()) for r in responses])
     if mean_words < 20:
         return short_threshold
@@ -30,8 +29,8 @@ def get_threshold(responses: list[str]) -> float:
         return long_threshold
 
 
-# Group the responses into clusters that say the same thing
 def cluster_responses(responses: list[str], embeddings: torch.Tensor) -> list[list[int]]:
+    # Greedy clustering, each response is assigned to the first cluster whose centroid exceeds the similarity threshold, or starts a new cluster. 
     threshold = get_threshold(responses)
     clusters: list[list[int]] = []
     centroids: list[torch.Tensor] = []
@@ -55,17 +54,14 @@ def cluster_responses(responses: list[str], embeddings: torch.Tensor) -> list[li
 
     return clusters
 
-
-# Produces a number representing how varied the responses were
 def semantic_entropy(clusters: list[list[int]]) -> float:
+    # Compute Shannon entropy over cluster size distribution
     sizes = np.array([len(c) for c in clusters], dtype=float)
     if len(sizes) == 1:
         return 0.0
     p = sizes / sizes.sum()
     return float(-(p * np.log(p)).sum())
 
-
-# Reads jsonl file containing the responses and returns it as a list
 def load_jsonl(path: str) -> list[dict]:
     items = []
     with open(path, "r", encoding="utf-8") as f:
@@ -87,6 +83,7 @@ def compute_entropy_for_items(items: list[dict], label: str) -> list[dict]:
         print(f"  [{label}] {i+1}/{len(items)}: {item['prompt'][:55]}... "
               f"(avg {mean_words:.0f} words, threshold={threshold})")
 
+        # Encode responses into normalised embeddings for cosine similarity comparison 
         embeddings = embed_model.encode(
             responses,
             convert_to_tensor=True,
@@ -113,26 +110,14 @@ normal_items = load_jsonl(normal_path)
 random_items = load_jsonl(random_path)
 top1_items   = load_jsonl(top1_path)
 
-# Verify all 3 files match up
-if not (len(normal_items) == len(random_items) == len(top1_items)):
-    raise ValueError(f"Line count mismatch: normal={len(normal_items)} "
-                     f"misrouted={len(random_items)} top1={len(top1_items)}")
-
-for i, (n, r, t) in enumerate(zip(normal_items, random_items, top1_items)):
-    if not (n.get("prompt") == r.get("prompt") == t.get("prompt")):
-        raise ValueError(f"Prompt mismatch at line {i}")
-
 # Compute entropy for each condition
-print("Computing entropy for normal routing...")
 normal_res = compute_entropy_for_items(normal_items, "normal")
 
-print("Computing entropy for misrouted routing...")
 random_res = compute_entropy_for_items(random_items, "misrouted")
 
-print("Computing entropy for top-1 routing...")
-top1_res   = compute_entropy_for_items(top1_items, "top1")
+top1_res = compute_entropy_for_items(top1_items, "top1")
 
-# ── Per-prompt comparison ──────────────────────────────────────────────────────
+# Per prompt comparison, combines entropy scores and pairwise differences for every prompt across conditions
 prompt_rows = []
 for n, r, t in zip(normal_res, random_res, top1_res):
     prompt_rows.append({
@@ -157,7 +142,7 @@ with open("results/per_prompt_comparison.csv", "w", newline="", encoding="utf-8"
     writer.writeheader()
     writer.writerows(prompt_rows)
 
-# ── Per-category summary ───────────────────────────────────────────────────────
+# Per category comparison, aggregates entropy by category, computing mean and std across
 cat = defaultdict(lambda: {"normal": [], "misrouted": [], "top1": []})
 for n, r, t in zip(normal_res, random_res, top1_res):
     cat[n["category"]]["normal"].append(n["entropy"])

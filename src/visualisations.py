@@ -23,7 +23,6 @@ row_labels = [
 ]
 
 
-# ── Helper: style a table ──────────────────────────────────────────────────────
 def style_table(table, n_cols, n_data_rows):
     table.auto_set_font_size(False)
     table.set_fontsize(11)
@@ -191,55 +190,43 @@ print("Saved: results/box_plots_entropy.png")
 plt.close()
 
 
-# ── Scatter: Normal vs Top-1 entropy per prompt ────────────────────────────────
+# ── Scatter: Normal entropy vs Misrouted and Top-1 per prompt ─────────────────
+# Each point is one prompt; points above the diagonal have higher entropy
+# than baseline, indicating greater response variation in that condition
 fig, ax = plt.subplots(figsize=(8, 8))
 
-for cat, cat_label in zip(categories, cat_labels):
-    subset = prompt_df[prompt_df["category"] == cat]
-    ax.scatter(subset["normal_entropy"], subset["top1_entropy"],
-               label=cat_label, alpha=0.75, s=60)
+scatter_styles = {
+    ("misrouted", "unanswerable"): {"color": "#2563EB", "marker": "o", "label": "Misrouted – Unanswerable"},
+    ("misrouted", "open_ended"):   {"color": "#16A34A", "marker": "o", "label": "Misrouted – Open Ended"},
+    ("misrouted", "factual"):      {"color": "#9333EA", "marker": "o", "label": "Misrouted – Factual"},
+    ("top1",      "unanswerable"): {"color": "#DC2626", "marker": "^", "label": "Top-1 – Unanswerable"},
+    ("top1",      "open_ended"):   {"color": "#F59E0B", "marker": "^", "label": "Top-1 – Open Ended"},
+    ("top1",      "factual"):      {"color": "#0891B2", "marker": "^", "label": "Top-1 – Factual"},
+}
 
-all_vals = pd.concat([prompt_df["normal_entropy"], prompt_df["top1_entropy"]])
+for (condition, cat), style in scatter_styles.items():
+    subset = prompt_df[prompt_df["category"] == cat]
+    ax.scatter(subset["normal_entropy"], subset[f"{condition}_entropy"],
+               color=style["color"], marker=style["marker"],
+               alpha=0.75, s=60, label=style["label"])
+
+all_vals = pd.concat([prompt_df["normal_entropy"],
+                      prompt_df["misrouted_entropy"],
+                      prompt_df["top1_entropy"]])
 lim = (all_vals.min() - 0.05, all_vals.max() + 0.05)
-ax.plot(lim, lim, "k--", linewidth=1, alpha=0.5, label="y = x (identical)")
+ax.plot(lim, lim, "k--", linewidth=1, alpha=0.5, label="y = x (baseline)")
 ax.set_xlim(lim)
 ax.set_ylim(lim)
-ax.set_title("Normal vs Top-1 Entropy per Prompt\n(points on diagonal = identical behaviour)",
+ax.set_title("Normal Entropy vs Misrouted & Top-1 per Prompt\n(points above diagonal = higher uncertainty than baseline)",
              fontsize=12, fontweight="bold")
 ax.set_xlabel("Normal Entropy (nats)", fontsize=11)
-ax.set_ylabel("Top-1 Entropy (nats)", fontsize=11)
-ax.legend(fontsize=10)
+ax.set_ylabel("Condition Entropy (nats)", fontsize=11)
+ax.legend(fontsize=9, ncol=2)
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
 plt.tight_layout()
-plt.savefig("results/scatter_normal_vs_top1.png", dpi=150, bbox_inches="tight")
-print("Saved: results/scatter_normal_vs_top1.png")
-plt.close()
-
-
-# ── Scatter: Normal vs Misrouted entropy per prompt ───────────────────────────
-fig, ax = plt.subplots(figsize=(8, 8))
-
-for cat, cat_label in zip(categories, cat_labels):
-    subset = prompt_df[prompt_df["category"] == cat]
-    ax.scatter(subset["normal_entropy"], subset["misrouted_entropy"],
-               label=cat_label, alpha=0.75, s=60)
-
-all_vals = pd.concat([prompt_df["normal_entropy"], prompt_df["misrouted_entropy"]])
-lim = (all_vals.min() - 0.05, all_vals.max() + 0.05)
-ax.plot(lim, lim, "k--", linewidth=1, alpha=0.5, label="y = x (identical)")
-ax.set_xlim(lim)
-ax.set_ylim(lim)
-ax.set_title("Normal vs Misrouted Entropy per Prompt\n(points above diagonal = misrouted more uncertain)",
-             fontsize=12, fontweight="bold")
-ax.set_xlabel("Normal Entropy (nats)", fontsize=11)
-ax.set_ylabel("Misrouted Entropy (nats)", fontsize=11)
-ax.legend(fontsize=10)
-ax.spines["top"].set_visible(False)
-ax.spines["right"].set_visible(False)
-plt.tight_layout()
-plt.savefig("results/scatter_normal_vs_misrouted.png", dpi=150, bbox_inches="tight")
-print("Saved: results/scatter_normal_vs_misrouted.png")
+plt.savefig("results/scatter_entropy.png", dpi=150, bbox_inches="tight")
+print("Saved: results/scatter_entropy.png")
 plt.close()
 
 
@@ -266,38 +253,6 @@ for ax, (condition, label) in zip(axes, [("normal", "Normal"), ("misrouted", "Mi
 plt.tight_layout()
 plt.savefig("results/histogram_entropy.png", dpi=150, bbox_inches="tight")
 print("Saved: results/histogram_entropy.png")
-plt.close()
-
-
-
-# ── Heatmap: Per-prompt entropy across conditions ─────────────────────────────
-fig, axes = plt.subplots(1, 3, figsize=(18, 12), sharey=False)
-fig.suptitle("Per-Prompt Semantic Entropy Heatmap by Category",
-             fontsize=13, fontweight="bold")
-
-global_max = prompt_df[["normal_entropy", "misrouted_entropy", "top1_entropy"]].max().max()
-
-for ax, cat, cat_label in zip(axes, categories, cat_labels):
-    subset  = prompt_df[prompt_df["category"] == cat].reset_index(drop=True)
-    prompts = [p[:45] + "..." if len(p) > 45 else p for p in subset["prompt"]]
-    data    = subset[["normal_entropy", "misrouted_entropy", "top1_entropy"]].values
-
-    im = ax.imshow(data, aspect="auto", cmap="YlOrRd", vmin=0, vmax=global_max)
-    ax.set_xticks([0, 1, 2])
-    ax.set_xticklabels(["Normal", "Misrouted", "Top-1"], fontsize=10)
-    ax.set_yticks(range(len(prompts)))
-    ax.set_yticklabels(prompts, fontsize=7)
-    ax.set_title(cat_label, fontsize=12, fontweight="bold")
-
-    for i in range(len(prompts)):
-        for j in range(3):
-            ax.text(j, i, f"{data[i, j]:.2f}", ha="center", va="center",
-                    fontsize=7, color="black" if data[i, j] < global_max * 0.6 else "white")
-
-plt.colorbar(im, ax=axes[-1], label="Semantic Entropy (nats)", shrink=0.6)
-plt.tight_layout()
-plt.savefig("results/heatmap_entropy.png", dpi=150, bbox_inches="tight")
-print("Saved: results/heatmap_entropy.png")
 plt.close()
 
 print("\nAll visualisations saved to results/")

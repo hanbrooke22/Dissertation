@@ -2,6 +2,7 @@ import json, torch, random
 import numpy as np
 import torch.nn.functional as F
 
+# Seed all random number generators for reproducibility across runs
 random.seed(42)
 np.random.seed(42)
 torch.manual_seed(42)
@@ -10,9 +11,10 @@ torch.cuda.manual_seed_all(42)
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
-output_path = "results/top1.jsonl"
+output_path = "results/top1.jsonl" # Top-1 routing condition output
 
 def make_top1_forward(original_forward, module):
+    # Returns a patched forward function that overrides the model's default top-4 expert routing, forcing each token to be processed by only the single highest-scoring expert
     def patched_forward(hidden_states):
         hidden_states_flat = hidden_states.reshape(-1, module.hidden_dim)
         router_logits = F.linear(hidden_states_flat, module.weight)
@@ -25,6 +27,7 @@ def make_top1_forward(original_forward, module):
             router_logits_softmax, k=1, dim=-1
         )
 
+        # Normalise routing weights if the module requires it 
         if module.norm_topk_prob:
             router_top_value = router_top_value / router_top_value.sum(
                 dim=-1, keepdim=True
@@ -36,7 +39,7 @@ def make_top1_forward(original_forward, module):
         return router_logits, router_scores, router_indices
     return patched_forward
 
-
+# Identify and patch all router modules in the model that control expert selection
 patched_modules = []
 for name, module in model.named_modules():
     if hasattr(module, 'top_k') and hasattr(module, 'norm_topk_prob') and hasattr(module, 'hidden_dim'):
@@ -48,6 +51,7 @@ print(f"Patched {len(patched_modules)} router modules")
 
 
 def generate_responses(prompt):
+    # Generate 10 responses per prompt under the top-1 routing condition
     messages = [
         {"role": "system", "content": "You are a helpful assistant. Always give a direct, confident answer in a full sentence."},
         {"role": "user",   "content": prompt}
@@ -71,6 +75,7 @@ def generate_responses(prompt):
             top_p=0.95
         )
 
+    # Strip input tokens from each generated sequence before decoding
     generated_ids = generated_ids[:, input_len:]
     return tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 
@@ -94,6 +99,7 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, \
         }
         f_out.write(json.dumps(out_item) + "\n")
 
+# Restore original router forwards after generation to avoid side effects on any subsequent use of the model
 for name, module, original_forward in patched_modules:
     module.forward = original_forward
 
