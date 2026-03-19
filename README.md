@@ -12,17 +12,29 @@ Misrouted — routing logits corrupted with 40% Gaussian noise
 
 For each condition, 10 responses are generated per prompt and semantic entropy is computed over the resulting response clusters to quantify uncertainty.
 Repository Structure
+
 src/
+
 ├── model.py              # Loads Qwen1.5-MoE with 4-bit quantisation (QLoRA, NF4)
+|
 ├── normal.py             # Baseline inference — standard routing
+|
 ├── top1.py               # Top-1 routing condition — patches MoE router modules
+|
 ├── wrong.py              # Misrouted condition — injects noise into gate layers
+|
 ├── SemanticEntropy.py    # Response embedding, clustering, and entropy computation
+|
 ├── statTest.py           # Statistical tests (Shapiro-Wilk, paired t-test, Wilcoxon)
+|
 ├── visualisations.py     # All plots and result tables
+
 data/
+
 └── prompts.jsonl         # Input prompts (one JSON object per line)
+
 results/                  # All outputs saved here (see below)
+
 
 Setup
 Install dependencies with: pip install -r requirements.txt
