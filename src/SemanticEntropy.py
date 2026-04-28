@@ -10,7 +10,7 @@ top1_path    = "results/top1.jsonl"
 
 embed_model_name = "all-mpnet-base-v2"
 
-# Length adaptive thresholds for semantic similarity clustering, shorter responses require a lower threshold to avoid over-splitting
+# Different cut-offs for how alike two answers need to be to count as "the same idea", short answers get a looser cut-off so we don't end up splitting them too much
 short_threshold  = 0.60
 medium_threshold = 0.72
 long_threshold   = 0.82
@@ -19,7 +19,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 embed_model = SentenceTransformer(embed_model_name, device=device)
 
 def get_threshold(responses: list[str]) -> float:
-    # Select similarity threshold based on mean response length
+    # Pick which cut-off to use based on how long the answers are on average
     mean_words = np.mean([len(r.split()) for r in responses])
     if mean_words < 20:
         return short_threshold
@@ -30,7 +30,7 @@ def get_threshold(responses: list[str]) -> float:
 
 
 def cluster_responses(responses: list[str], embeddings: torch.Tensor) -> list[list[int]]:
-    # Greedy clustering, each response is assigned to the first cluster whose centroid exceeds the similarity threshold, or starts a new cluster. 
+    # Go through the answers one by one and drop each into the first cluster it's similar enough to, or start a new cluster if nothing fits
     threshold = get_threshold(responses)
     clusters: list[list[int]] = []
     centroids: list[torch.Tensor] = []
@@ -44,18 +44,20 @@ def cluster_responses(responses: list[str], embeddings: torch.Tensor) -> list[li
             if sim >= threshold:
                 clusters[j].append(i)
                 n = len(clusters[j])
+                # Update the clusters's "average" answer now that a new one has joined
                 centroids[j] = F.normalize((centroid * (n - 1) + emb) / n, dim=0)
                 placed = True
                 break
 
         if not placed:
+            # Nothing matched, so this answer creates a new cluster
             clusters.append([i])
             centroids.append(F.normalize(emb.clone(), dim=0))
 
     return clusters
 
 def semantic_entropy(clusters: list[list[int]]) -> float:
-    # Compute Shannon entropy over cluster size distribution
+    # Work out a single number that says how spread out the answers are across clusters, higher means more disagreement
     sizes = np.array([len(c) for c in clusters], dtype=float)
     if len(sizes) == 1:
         return 0.0
@@ -63,6 +65,7 @@ def semantic_entropy(clusters: list[list[int]]) -> float:
     return float(-(p * np.log(p)).sum())
 
 def load_jsonl(path: str) -> list[dict]:
+    # Read a file where each line is its own little JSON record and put them all in a list
     items = []
     with open(path, "r", encoding="utf-8") as f:
         for line in f:
@@ -83,7 +86,7 @@ def compute_entropy_for_items(items: list[dict], label: str) -> list[dict]:
         print(f"  [{label}] {i+1}/{len(items)}: {item['prompt'][:55]}... "
               f"(avg {mean_words:.0f} words, threshold={threshold})")
 
-        # Encode responses into normalised embeddings for cosine similarity comparison 
+        # Turn each answer into a list of numbers that captures its meaning, so we can compare them properly
         embeddings = embed_model.encode(
             responses,
             convert_to_tensor=True,
@@ -105,19 +108,19 @@ def compute_entropy_for_items(items: list[dict], label: str) -> list[dict]:
     return results
 
 
-# Load all 3 conditions
+# Open up all three sets of results so we can compare them
 normal_items = load_jsonl(normal_path)
 random_items = load_jsonl(random_path)
 top1_items   = load_jsonl(top1_path)
 
-# Compute entropy for each condition
+# Run the entropy calculation on each set in turn
 normal_res = compute_entropy_for_items(normal_items, "normal")
 
 random_res = compute_entropy_for_items(random_items, "misrouted")
 
 top1_res = compute_entropy_for_items(top1_items, "top1")
 
-# Per prompt comparison, combines entropy scores and pairwise differences for every prompt across conditions
+# Build a row per prompt showing the scores from each condition side by side, plus the gaps between them
 prompt_rows = []
 for n, r, t in zip(normal_res, random_res, top1_res):
     prompt_rows.append({
@@ -134,6 +137,7 @@ for n, r, t in zip(normal_res, random_res, top1_res):
         "diff_misrouted_top1":    round(t["entropy"] - r["entropy"], 4),
     })
 
+# Save the per prompt table as JSON for easy reading and as CSV for opening in a spreadsheet
 with open("results/per_prompt_comparison.json", "w", encoding="utf-8") as f:
     json.dump(prompt_rows, f, indent=2)
 
@@ -142,7 +146,7 @@ with open("results/per_prompt_comparison.csv", "w", newline="", encoding="utf-8"
     writer.writeheader()
     writer.writerows(prompt_rows)
 
-# Per category comparison, aggregates entropy by category, computing mean and std across
+# Now do the same thing but grouped by category, so we can see the average score for each topic and how much it bounces around
 cat = defaultdict(lambda: {"normal": [], "misrouted": [], "top1": []})
 for n, r, t in zip(normal_res, random_res, top1_res):
     cat[n["category"]]["normal"].append(n["entropy"])
@@ -168,6 +172,7 @@ for category, vals in cat.items():
         "diff_misrouted_top1":     float(t_vals.mean() - r_vals.mean()),
     })
 
+# Save the per category summary in both formats too
 with open("results/per_category_comparison.json", "w", encoding="utf-8") as f:
     json.dump(category_rows, f, indent=2)
 

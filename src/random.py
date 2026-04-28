@@ -1,7 +1,7 @@
 import json, torch, random
 import numpy as np
 
-# Seed all random number generators for reproducibility across ruins
+# Pin all the random bits to the same number so we get the same results every run
 random.seed(42)
 np.random.seed(42)
 torch.manual_seed(42)
@@ -10,11 +10,11 @@ torch.cuda.manual_seed_all(42)
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
-output_path = "results/misrouted.jsonl" # Misrouted condition output
+output_path = "results/misrouted.jsonl" # Where the answers go when we mess with the routing
 
-misroute_strength = 0.4  # Change the routing - 40% noise
+misroute_strength = 0.4  # How much to corrupt the routing — 40% noise mixed into each gate output
 
-# Register forward hooks on all MoE gate layers to corrupt their routing logits
+# Hook into every MoE gate layer so we can interfere with its output as the model runs
 hooks = []
 
 for name, module in model.named_modules():
@@ -22,24 +22,25 @@ for name, module in model.named_modules():
         if module.out_features > 1:
 
             def make_hook(strength):
-                # Hook intercepts the gate output and injects noise proportional to misroute_strength
+                # Inside the hook: blend the gate's normal output with random noise, with the strength setting controlling the mix
                 def hook_fn(module, input, output):
                     noise = torch.rand_like(output)
                     noise = noise * output.std() + output.mean()
                     return (1.0 - strength) * output + strength * noise
                 return hook_fn
 
-            # Attach hook to each gate layer and storereference for later removal
+            # Attach the hook to this layer and keep hold of it so we can take it back off afterwards
             h = module.register_forward_hook(make_hook(misroute_strength))
             hooks.append(h)
 
 def generate_responses(prompt):
-    # Generate 10 responses per prompt under the misrouted condition
+    # Get 10 different answers for one prompt with the misrouted gates in place
     messages = [
         {"role": "system", "content": "You are a helpful assistant. Always give a direct, confident answer in a full sentence."},
         {"role": "user",   "content": prompt}
     ]
 
+    # Wrap the messages up in the format the model expects to see
     text = tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=True
     )
@@ -58,11 +59,10 @@ def generate_responses(prompt):
             top_p=0.95
         )
 
-    # Strip the input tokens from each generated sequence before decoding
+    # Chop the original prompt off the front so we're left with just the model's reply
     generated_ids = generated_ids[:, input_len:]
     return tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 
-# Output to the file
 with open(prompts_path, "r", encoding="utf-8") as f_in, \
      open(output_path,  "w", encoding="utf-8") as f_out:
 
@@ -81,8 +81,9 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, \
             "prompt":    prompt,
             "responses": responses
         }
+        # Write each prompt and its 10 answers as one line in the output file
         f_out.write(json.dumps(out_item) + "\n")
 
-# Remove all hooks so the model returns to normal
+# Take all the hooks off so the model's back to normal for anything else that uses it
 for h in hooks:
     h.remove()

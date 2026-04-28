@@ -40,17 +40,26 @@
       "normal_vs_misrouted": {
         "W": 0.0,
         "p": 1.6406757785630908e-14,
-        "sig": "***"
+        "sig": "***",
+        "effect_size": 0.8686778614618108,
+        "effect_label": "large",
+        "effect_type": "r"
       },
       "normal_vs_top1": {
         "W": 17.5,
         "p": 0.30743416592739536,
-        "sig": "ns"
+        "sig": "ns",
+        "effect_size": 0.8595228704497172,
+        "effect_label": "large",
+        "effect_type": "r"
       },
       "misrouted_vs_top1": {
         "W": 0.0,
         "p": 1.638999301427136e-14,
-        "sig": "***"
+        "sig": "***",
+        "effect_size": 0.8686778614618108,
+        "effect_label": "large",
+        "effect_type": "r"
       }
     }
   },
@@ -96,17 +105,26 @@
         "normal_vs_misrouted": {
           "t": -18.315761031392363,
           "p": 2.2133637014050917e-16,
-          "sig": "***"
+          "sig": "***",
+          "effect_size": -3.524869853962412,
+          "effect_label": "large",
+          "effect_type": "Cohen's d"
         },
         "normal_vs_top1": {
           "W": 6.0,
           "p": 0.17552335081205495,
-          "sig": "ns"
+          "sig": "ns",
+          "effect_size": 0.8461212182194203,
+          "effect_label": "large",
+          "effect_type": "r"
         },
         "misrouted_vs_top1": {
           "t": 15.615712032057061,
           "p": 1.0015926762340851e-14,
-          "sig": "***"
+          "sig": "***",
+          "effect_size": 3.005245181765274,
+          "effect_label": "large",
+          "effect_type": "Cohen's d"
         }
       }
     },
@@ -151,17 +169,26 @@
         "normal_vs_misrouted": {
           "W": 0.0,
           "p": 1.7824487898461016e-05,
-          "sig": "***"
+          "sig": "***",
+          "effect_size": 0.873862897505303,
+          "effect_label": "large",
+          "effect_type": "r"
         },
         "normal_vs_top1": {
           "W": NaN,
           "p": NaN,
-          "sig": "n/a"
+          "sig": "n/a",
+          "effect_size": NaN,
+          "effect_label": "n/a",
+          "effect_type": "r"
         },
         "misrouted_vs_top1": {
           "W": 0.0,
           "p": 1.7824487898461016e-05,
-          "sig": "***"
+          "sig": "***",
+          "effect_size": 0.873862897505303,
+          "effect_label": "large",
+          "effect_type": "r"
         }
       }
     },
@@ -206,17 +233,26 @@
         "normal_vs_misrouted": {
           "t": -13.568485776058912,
           "p": 2.629123927319769e-13,
-          "sig": "***"
+          "sig": "***",
+          "effect_size": -2.6112563051010738,
+          "effect_label": "large",
+          "effect_type": "Cohen's d"
         },
         "normal_vs_top1": {
           "W": 3.0,
           "p": 1.0,
-          "sig": "ns"
+          "sig": "ns",
+          "effect_size": 0.8599920578623617,
+          "effect_label": "large",
+          "effect_type": "r"
         },
         "misrouted_vs_top1": {
           "t": 12.027378383125004,
           "p": 3.985066688618831e-12,
-          "sig": "***"
+          "sig": "***",
+          "effect_size": 2.314670049047569,
+          "effect_label": "large",
+          "effect_type": "Cohen's d"
         }
       }
     }

@@ -1,7 +1,7 @@
 import json, torch, random
 import numpy as np
 
-# Seed all random number generators for reproducibility across runs
+# Pin all the random bits to the same number so we get the same results every run
 random.seed(42)
 np.random.seed(42)
 torch.manual_seed(42)
@@ -10,7 +10,7 @@ torch.cuda.manual_seed_all(42)
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
-output_path = "results/normal.jsonl" # Output for the baseline generation
+output_path = "results/normal.jsonl" # Where the answers get saved
 
 with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", encoding="utf-8") as f_out:
     for line in f_in:
@@ -26,7 +26,7 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", e
             {"role": "user", "content": prompt}
         ]
 
-        # Apply the model's chat
+        # Wrap the messages up in the format the model expects to see
         text = tokenizer.apply_chat_template(
             messages,
             tokenize=False,
@@ -36,8 +36,8 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", e
         model_inputs = tokenizer([text], return_tensors="pt").to(next(model.parameters()).device)
         input_len = model_inputs.input_ids.shape[1]
 
-        # Generate 10 responses per prompt to measure output variation under the baseline condition
-        with torch.inference_mode(): # inference_mode disables gradient tracking for efficiency 
+        # Ask the model for 10 different responses to the same prompt so we can see how much it varies
+        with torch.inference_mode(): # Tells PyTorch we're not training, just running, so it can skip the extra bookkeeping
             generated_ids = model.generate(
                 **model_inputs,
                 max_new_tokens=256,
@@ -47,7 +47,7 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", e
                 top_p=0.95
             )
 
-        # Strip input tokens from each generated sequence before decoding
+        # Chop the original prompt off the front so we're left with just the model's reply
         generated_ids = generated_ids[:, input_len:]
         responses = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 
@@ -57,4 +57,5 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, open(output_path, "w", e
             "responses": responses
         }
 
+        # Write each prompt and its 10 answers as one line in the output file
         f_out.write(json.dumps(out_item) + "\n")

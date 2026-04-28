@@ -2,7 +2,7 @@ import json, torch, random
 import numpy as np
 import torch.nn.functional as F
 
-# Seed all random number generators for reproducibility across runs
+# Pin all the random bits to the same number so we get the same results every run
 random.seed(42)
 np.random.seed(42)
 torch.manual_seed(42)
@@ -11,10 +11,10 @@ torch.cuda.manual_seed_all(42)
 from model import model, tokenizer
 
 prompts_path = "data/prompts.jsonl"
-output_path = "results/top1.jsonl" # Top-1 routing condition output
+output_path = "results/top1.jsonl" # Where the answers go when we force top-1 routing
 
 def make_top1_forward(original_forward, module):
-    # Returns a patched forward function that overrides the model's default top-4 expert routing, forcing each token to be processed by only the single highest-scoring expert
+    # Builds a replacement forward function that overrides the model's normal top-4 routing and makes each token go through just the single best expert instead
     def patched_forward(hidden_states):
         hidden_states_flat = hidden_states.reshape(-1, module.hidden_dim)
         router_logits = F.linear(hidden_states_flat, module.weight)
@@ -22,12 +22,12 @@ def make_top1_forward(original_forward, module):
             router_logits, dtype=torch.float, dim=-1
         )
 
-        # Force top-1 instead of the default top-4
+        # Pick just the top-1 expert instead of the usual top-4
         router_top_value, router_indices = torch.topk(
             router_logits_softmax, k=1, dim=-1
         )
 
-        # Normalise routing weights if the module requires it 
+        # Normalise the routing weights if the module is set up to expect that
         if module.norm_topk_prob:
             router_top_value = router_top_value / router_top_value.sum(
                 dim=-1, keepdim=True
@@ -39,7 +39,7 @@ def make_top1_forward(original_forward, module):
         return router_logits, router_scores, router_indices
     return patched_forward
 
-# Identify and patch all router modules in the model that control expert selection
+# Find every router module in the model and swap its forward function for the top-1 version
 patched_modules = []
 for name, module in model.named_modules():
     if hasattr(module, 'top_k') and hasattr(module, 'norm_topk_prob') and hasattr(module, 'hidden_dim'):
@@ -51,12 +51,13 @@ print(f"Patched {len(patched_modules)} router modules")
 
 
 def generate_responses(prompt):
-    # Generate 10 responses per prompt under the top-1 routing condition
+    # Get 10 different answers for one prompt with top-1 routing in place
     messages = [
         {"role": "system", "content": "You are a helpful assistant. Always give a direct, confident answer in a full sentence."},
         {"role": "user",   "content": prompt}
     ]
 
+    # Wrap the messages up in the format the model expects to see
     text = tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=True
     )
@@ -75,7 +76,7 @@ def generate_responses(prompt):
             top_p=0.95
         )
 
-    # Strip input tokens from each generated sequence before decoding
+    # Remove the original prompt off the front so we're left with just the model's reply
     generated_ids = generated_ids[:, input_len:]
     return tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 
@@ -97,9 +98,10 @@ with open(prompts_path, "r", encoding="utf-8") as f_in, \
             "prompt":    prompt,
             "responses": responses
         }
+        # Write each prompt and its 10 answers as one line in the output file
         f_out.write(json.dumps(out_item) + "\n")
 
-# Restore original router forwards after generation to avoid side effects on any subsequent use of the model
+# Put the original forward functions back so the patched versions don't carry over into anything else that uses the model
 for name, module, original_forward in patched_modules:
     module.forward = original_forward
 
